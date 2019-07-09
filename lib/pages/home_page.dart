@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:pay_cost/dao/home_dao.dart';
+import 'package:pay_cost/model/home_model.dart';
+import 'package:easy_dialog/easy_dialog.dart';
 
 const APPBAR_SCROLL_OFFSET = 160;
 
@@ -16,13 +19,14 @@ class _HomePageState extends State<HomePage> {
   ];
 
   double appBarAlpha = 0;
+  bool _loading = true;
 
   void _onScroll(double pixels) {
     double alpha = pixels / APPBAR_SCROLL_OFFSET;
 
-    if(alpha < 0) {
+    if (alpha < 0) {
       alpha = 0;
-    }else if(alpha > 1) {
+    } else if (alpha > 1) {
       alpha = 1;
     }
     setState(() {
@@ -30,14 +34,41 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<Null> _handleRefresh() async {
+    try {
+      HomeModel model = await HomeDao.fetch();
+      setState(() {
+        _loading = false;
+      });
+    } catch (e) {
+      print(e);
+      setState(() {
+        _loading = false;
+      });
+    }
+    return null;
+  }
+
+  void showAlertDialog(BuildContext context) {
+    EasyDialog(
+      description: Text(
+        "功能暂未开放，敬请期待",
+        textScaleFactor: 1.2,
+        textAlign: TextAlign.center,
+      ),
+      height: 160,
+    ).show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
+      body: Container(
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: RefreshIndicator(
+            onRefresh: _handleRefresh,
             child: NotificationListener(
               onNotification: (scrollNotification) {
                 if (scrollNotification is ScrollUpdateNotification &&
@@ -47,44 +78,413 @@ class _HomePageState extends State<HomePage> {
               },
               child: ListView(
                 children: <Widget>[
-                  Container(
-                    height: 200,
-                    child: Swiper(
-                      itemCount: _imageUrls.length,
-                      autoplay: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Image.network(
-                          _imageUrls[index],
-                          fit: BoxFit.fill,
-                        );
-                      },
-                      pagination: SwiperPagination(),
-                    ),
-                  ),
-                  Container(
-                    height: 800,
-                    child: ListTile(
-                      title: Text('🥝'),
-                    ),
+                  Stack(
+                    children: <Widget>[
+                      Opacity(
+                        opacity: appBarAlpha,
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text('首页'),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 200,
+                        child: Swiper(
+                          itemCount: _imageUrls.length,
+                          autoplay: true,
+                          autoplayDelay: 6000,
+                          autoplayDisableOnInteraction: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Image.network(
+                              _imageUrls[index],
+                              fit: BoxFit.fill,
+                            );
+                          },
+                          pagination: SwiperPagination(),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 160, 20, 20),
+                        child: Container(
+                          height: 160,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 10,
+                                offset: Offset.zero,
+                              ),
+                            ],
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '常规缴费',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '水费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '电费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '燃气费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '手机充值',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 340, 20, 20),
+                        child: Container(
+                          height: 400,
+                          child: Container(
+                            padding: EdgeInsets.all(18),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '便捷缴费',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '水费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '电费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '燃气费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '有线电视费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '手机充值',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '通讯费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '教育考试费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '物业费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.fromLTRB(18, 12, 22, 10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '党费',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.ac_unit,
+                                              size: 50,
+                                            ),
+                                            Text(
+                                              '其他',
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
           ),
-          Opacity(
-            opacity: appBarAlpha,
-            child: Container(
-              height: 80,
-              decoration: BoxDecoration(color: Colors.white),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Text('首页'),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
