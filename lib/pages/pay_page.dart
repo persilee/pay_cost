@@ -4,25 +4,17 @@ import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
 
 class PayPage extends StatefulWidget {
-
   @override
   _PayPageState createState() => _PayPageState();
 }
 
 class _PayPageState extends State<PayPage> {
   final registerFormKey = GlobalKey<FormState>();
-  TextEditingController _paymentProjectController = TextEditingController();
-  TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '深圳市';
-  String _paymentProject = '深圳市水费';
-  String _payCostUnit = '深圳水务集团';
-
 
   String validatorPwd(value) {
     if (value.isEmpty) {
       return 'pwd is required';
     }
-
     return null;
   }
 
@@ -38,23 +30,9 @@ class _PayPageState extends State<PayPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _paymentProjectController.text = '深圳市水费';
-    _payCostUnitController.text = '深圳水务集团';
-    _paymentProjectController.addListener(() {
-      print(_paymentProjectController.value);
-    });
-    _payCostUnitController.addListener(() {
-      print(_payCostUnitController.value);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     /*获取传递过来的参数*/
     PayInfoModel _payInfo = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('${_payInfo.type}缴费'),
@@ -68,12 +46,12 @@ class _PayPageState extends State<PayPage> {
                 Container(
                   height: 160,
                   decoration:
-                  BoxDecoration(color: Theme.of(context).primaryColor),
+                      BoxDecoration(color: Theme.of(context).primaryColor),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 460,
+                    height: 480,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -88,7 +66,7 @@ class _PayPageState extends State<PayPage> {
                       ],
                     ),
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+                      padding: EdgeInsets.fromLTRB(26, 30, 26, 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -97,87 +75,117 @@ class _PayPageState extends State<PayPage> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
+                              color: Colors.black54,
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 30),
+                            padding: EdgeInsets.only(top: 15),
+                          ),
+                          Divider(
+                              height: 1.0, indent: 0.0, color: Colors.black26),
+                          Padding(
+                            padding: EdgeInsets.only(top: 20),
+                          ),
+                          Container(
+                            height: 100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '应缴金额',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.black87),
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      '66.66',
+                                      style: TextStyle(
+                                          fontSize: 46,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text(
+                                      '（含违约金 5.6 元）',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black45,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  '缴费单位',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black45),
+                                ),
+                                Text(
+                                  _payInfo.unit,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black87),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  '缴费户号',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black45),
+                                ),
+                                Text(
+                                  _payInfo.userId,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black87),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  '户名',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black45),
+                                ),
+                                Text(
+                                  '**颖',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black87),
+                                ),
+                              ],
+                            ),
                           ),
                           Form(
                             key: registerFormKey,
                             child: Column(
                               children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text('缴费城市：'),
-                                      FlatButton.icon(
-                                        label: Text(
-                                          _selectCity,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                        icon: Icon(Icons.arrow_drop_down),
-                                        highlightColor: Colors.transparent,
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CityPage()))
-                                              .then((value) {
-                                            setState(() {
-                                              _selectCity = (value == null ? '深圳市': value.name);
-                                              if(_selectCity == '深圳市'){
-                                                _payCostUnitController.text = '深圳市水费';
-                                                _paymentProjectController.text = '深圳水务集团';
-                                              } else if(_selectCity == '广州市'){
-                                                _payCostUnitController.text = '广州市水费';
-                                                _paymentProjectController.text = '广州水务集团';
-                                              }else{
-                                                _payCostUnitController.text = '';
-                                                _paymentProjectController.text = '';
-                                                showAlertDialog(context);
-                                              }
-                                            });
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                TextFormField(
-                                  controller: _paymentProjectController,
-                                  decoration: InputDecoration(
-                                    labelText: '缴费项目',
-                                    labelStyle: TextStyle(fontSize: 16),
-                                    helperText: '',
-                                  ),
-                                  onSaved: (value) {
-
-                                  },
-                                  enabled: false,
-                                ),
-                                TextFormField(
-                                  controller: _payCostUnitController,
-                                  decoration: InputDecoration(
-                                    labelText: '收费单位',
-                                    labelStyle: TextStyle(fontSize: 16),
-                                    helperText: '',
-                                  ),
-                                  onSaved: (value) {
-
-                                  },
-                                  enabled: false,
-                                ),
                                 TextFormField(
                                   decoration: InputDecoration(
-                                    labelText: '用户编号',
-                                    labelStyle: TextStyle(fontSize: 16),
+                                    labelText: '缴费金额',
+                                    labelStyle: TextStyle(fontSize: 20),
                                     helperText: '',
                                   ),
-                                  onSaved: (value) {
-
-                                  },
+                                  onSaved: (value) {},
+                                  style: TextStyle(fontSize: 26),
                                 ),
                               ],
                             ),
@@ -199,18 +207,16 @@ class _PayPageState extends State<PayPage> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
-                      child: Text('缴 费'),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(
-                            builder: (context) =>
-                                null));
-                      },
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: Text(
+                        '缴 费',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () { },
                       splashColor: Colors.grey[200],
                       color: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                          borderRadius: BorderRadius.all(Radius.circular(60))),
                     ),
                   ),
                 ),
