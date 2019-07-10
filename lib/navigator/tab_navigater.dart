@@ -21,6 +21,7 @@ class _TabNavigatorState extends State<TabNavigator> {
     return Scaffold(
       body: PageView(
         controller: _controller,
+        physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           HomePage(),
           SearchPage(),
@@ -29,6 +30,8 @@ class _TabNavigatorState extends State<TabNavigator> {
       ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
+          elevation: 16,
+          iconSize: 36,
           onTap: (index) {
             _controller.jumpToPage(index);
             setState(() {
@@ -47,9 +50,10 @@ class _TabNavigatorState extends State<TabNavigator> {
                 color: _activeColor,
               ),
               title: Text(
-                '缴费',
+                '首页',
                 style: TextStyle(
                   color: _currentIndex != 0 ? _defaultColor : _activeColor,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -66,6 +70,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 '记录',
                 style: TextStyle(
                   color: _currentIndex != 1 ? _defaultColor : _activeColor,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -81,7 +86,8 @@ class _TabNavigatorState extends State<TabNavigator> {
               title: Text(
                 '我的',
                 style: TextStyle(
-                  color: _currentIndex != 3 ? _defaultColor : _activeColor,
+                  color: _currentIndex != 2 ? _defaultColor : _activeColor,
+                  fontSize: 16,
                 ),
               ),
             ),
