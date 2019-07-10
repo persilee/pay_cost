@@ -2,19 +2,20 @@ import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
-import 'package:pay_cost/pages/pay_page.dart';
 
-class WaterPage extends StatefulWidget {
+class PayPage extends StatefulWidget {
 
   @override
-  _WaterPageState createState() => _WaterPageState();
+  _PayPageState createState() => _PayPageState();
 }
 
-class _WaterPageState extends State<WaterPage> {
+class _PayPageState extends State<PayPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
   String _selectCity = '深圳市';
+  String _paymentProject = '深圳市水费';
+  String _payCostUnit = '深圳水务集团';
 
 
   String validatorPwd(value) {
@@ -51,9 +52,12 @@ class _WaterPageState extends State<WaterPage> {
 
   @override
   Widget build(BuildContext context) {
+    /*获取传递过来的参数*/
+    PayInfoModel _payInfo = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('水费'),
+        title: Text('${_payInfo.type}缴费'),
         elevation: 0.0,
       ),
       body: Container(
@@ -64,7 +68,7 @@ class _WaterPageState extends State<WaterPage> {
                 Container(
                   height: 160,
                   decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
+                  BoxDecoration(color: Theme.of(context).primaryColor),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
@@ -118,23 +122,23 @@ class _WaterPageState extends State<WaterPage> {
                                         onPressed: () {
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CityPage()))
+                                              builder: (context) =>
+                                                  CityPage()))
                                               .then((value) {
-                                                setState(() {
-                                                  _selectCity = (value == null ? '深圳市': value.name);
-                                                  if(_selectCity == '深圳市'){
-                                                    _payCostUnitController.text = '深圳市水费';
-                                                    _paymentProjectController.text = '深圳水务集团';
-                                                  } else if(_selectCity == '广州市'){
-                                                    _payCostUnitController.text = '广州市水费';
-                                                    _paymentProjectController.text = '广州水务集团';
-                                                  }else{
-                                                    _payCostUnitController.text = '';
-                                                    _paymentProjectController.text = '';
-                                                    showAlertDialog(context);
-                                                  }
-                                                });
+                                            setState(() {
+                                              _selectCity = (value == null ? '深圳市': value.name);
+                                              if(_selectCity == '深圳市'){
+                                                _payCostUnitController.text = '深圳市水费';
+                                                _paymentProjectController.text = '深圳水务集团';
+                                              } else if(_selectCity == '广州市'){
+                                                _payCostUnitController.text = '广州市水费';
+                                                _paymentProjectController.text = '广州水务集团';
+                                              }else{
+                                                _payCostUnitController.text = '';
+                                                _paymentProjectController.text = '';
+                                                showAlertDialog(context);
+                                              }
+                                            });
                                           });
                                         },
                                       ),
@@ -196,15 +200,12 @@ class _WaterPageState extends State<WaterPage> {
                     padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
-                      child: Text('下一步'),
+                      child: Text('缴 费'),
                       onPressed: () {
                         Navigator.of(context)
-                            .push<String>(MaterialPageRoute(
+                            .push(MaterialPageRoute(
                             builder: (context) =>
-                                PayPage(), settings: RouteSettings(
-                          arguments: PayInfoModel(type: '水费', city: _selectCity, project: _payCostUnitController.text, unit: _paymentProjectController.text),
-                        ))
-                        );
+                                null));
                       },
                       splashColor: Colors.grey[200],
                       color: Theme.of(context).primaryColor,
