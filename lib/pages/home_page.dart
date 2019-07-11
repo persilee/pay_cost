@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:pay_cost/dao/home_dao.dart';
 import 'package:pay_cost/model/home_model.dart';
 import 'package:easy_dialog/easy_dialog.dart';
+import 'package:pay_cost/pages/electricity_page.dart';
 import 'package:pay_cost/pages/water_page.dart';
 
 const APPBAR_SCROLL_OFFSET = 160;
@@ -170,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        showAlertDialog(context);
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ElectricityPage()));
                                       },
                                       child:Padding(
                                         padding: EdgeInsets.all(10),
