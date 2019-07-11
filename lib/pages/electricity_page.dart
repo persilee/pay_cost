@@ -4,18 +4,19 @@ import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
 import 'package:pay_cost/pages/pay_page.dart';
 
-class WaterPage extends StatefulWidget {
+class ElectricityPage extends StatefulWidget {
   @override
-  _WaterPageState createState() => _WaterPageState();
+  _ElectricityPageState createState() => _ElectricityPageState();
 }
 
-class _WaterPageState extends State<WaterPage> {
+class _ElectricityPageState extends State<ElectricityPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
   String _selectCity = '深圳市';
   bool _autoValidate = false;
   String _userId;
+  String _currentMenuItem = '请选择';
 
   String validatorUser(value) {
     if (value.isEmpty) {
@@ -73,8 +74,8 @@ class _WaterPageState extends State<WaterPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '深圳市水费';
-    _payCostUnitController.text = '深圳水务集团';
+    _paymentProjectController.text = '深圳市电费';
+    _payCostUnitController.text = '深圳供电局';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -87,7 +88,7 @@ class _WaterPageState extends State<WaterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('水费'),
+        title: Text('电费'),
         elevation: 0.0,
       ),
       body: Container(
@@ -103,7 +104,7 @@ class _WaterPageState extends State<WaterPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 460,
+                    height: 560,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -123,7 +124,7 @@ class _WaterPageState extends State<WaterPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '水费',
+                            '电费',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -171,14 +172,14 @@ class _WaterPageState extends State<WaterPage> {
                                                   : value.name);
                                               if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
-                                                    '深圳市水费';
+                                                    '深圳市电费';
                                                 _paymentProjectController.text =
-                                                    '深圳水务集团';
+                                                    '深圳供电局';
                                               } else if (_selectCity == '广州市') {
                                                 _payCostUnitController.text =
-                                                    '广州市水费';
+                                                    '广州市电费';
                                                 _paymentProjectController.text =
-                                                    '广州水务集团';
+                                                    '易票联支付技术有限公司';
                                               } else {
                                                 _payCostUnitController.text =
                                                     '';
@@ -212,6 +213,65 @@ class _WaterPageState extends State<WaterPage> {
                                   ),
                                   onSaved: (value) {},
                                   enabled: false,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        '地区码：',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        _currentMenuItem,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      PopupMenuButton(
+                                        icon: Icon(Icons.arrow_drop_down),
+                                        onSelected: (value) {
+                                          setState(() {
+                                            _currentMenuItem = value;
+                                          });
+                                        },
+                                        itemBuilder: (BuildContext context) => [
+                                              PopupMenuItem(
+                                                child: Text('深圳市'),
+                                                value: '440300',
+                                              ),
+                                          PopupMenuItem(
+                                            child: Text('福田区'),
+                                            value: '440303',
+                                          ),
+                                          PopupMenuItem(
+                                            child: Text('罗湖区'),
+                                            value: '440304',
+                                          ),
+                                          PopupMenuItem(
+                                            child: Text('南山区'),
+                                            value: '440305',
+                                          ),
+                                          PopupMenuItem(
+                                            child: Text('宝安区'),
+                                            value: '440306',
+                                          ),
+                                          PopupMenuItem(
+                                            child: Text('龙岗区'),
+                                            value: '440307',
+                                          ),
+                                          PopupMenuItem(
+                                            child: Text('盐田区'),
+                                            value: '440308',
+                                          ),PopupMenuItem(
+                                            child: Text('龙华区'),
+                                            value: '440309',
+                                          ),PopupMenuItem(
+                                            child: Text('坪山区'),
+                                            value: '440310',
+                                          ),
+                                            ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 TextFormField(
                                   decoration: InputDecoration(
