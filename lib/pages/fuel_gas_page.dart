@@ -3,41 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
 import 'package:pay_cost/pages/pay_page.dart';
-import 'package:direct_select/direct_select.dart';
 
-class ElectricityPage extends StatefulWidget {
+class FuelGasPage extends StatefulWidget {
   @override
-  _ElectricityPageState createState() => _ElectricityPageState();
+  _FuelGasPageState createState() => _FuelGasPageState();
 }
 
-class _ElectricityPageState extends State<ElectricityPage> {
+class _FuelGasPageState extends State<FuelGasPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
   String _selectCity = '深圳市';
   bool _autoValidate = false;
   String _userId;
-  String _currentMenuItem = '请选择';
-  final elements1 = [
-    "罗湖区",
-    "福田区",
-    "南山区",
-    "宝安区",
-    "龙岗区",
-    "盐田区",
-    "龙华区",
-    "坪山区",
-    "光明区",
-  ];
-  int selectedIndex1 = 0;
-
-  List<Widget> _buildItems1() {
-    return elements1
-        .map((val) => MySelectionItem(
-      title: val,
-    ))
-        .toList();
-  }
 
   String validatorUser(value) {
     if (value.isEmpty) {
@@ -95,8 +73,8 @@ class _ElectricityPageState extends State<ElectricityPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '深圳市电费';
-    _payCostUnitController.text = '深圳供电局';
+    _paymentProjectController.text = '深圳市燃气费';
+    _payCostUnitController.text = '深圳燃气集团股份有限公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -109,7 +87,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('电费'),
+        title: Text('燃气费'),
         elevation: 0.0,
       ),
       body: Container(
@@ -125,7 +103,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 560,
+                    height: 460,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -145,7 +123,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '电费',
+                            '燃气费',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -172,7 +150,6 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                         style: TextStyle(fontSize: 18),
                                       ),
                                       FlatButton.icon(
-                                        icon: Icon(Icons.arrow_drop_down),
                                         label: Text(
                                           _selectCity,
                                           style: TextStyle(
@@ -180,12 +157,13 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                             fontSize: 18,
                                           ),
                                         ),
+                                        icon: Icon(Icons.arrow_drop_down),
                                         highlightColor: Colors.transparent,
                                         onPressed: () {
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CityPage()))
+                                                  builder: (context) =>
+                                                      CityPage()))
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
@@ -193,19 +171,14 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                                   : value.name);
                                               if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
-                                                '深圳市电费';
+                                                    '深圳市燃气费';
                                                 _paymentProjectController.text =
-                                                '深圳供电局';
-                                              } else if (_selectCity == '广州市') {
-                                                _payCostUnitController.text =
-                                                '广州市电费';
-                                                _paymentProjectController.text =
-                                                '易票联支付技术有限公司';
+                                                    '深圳燃气集团股份有限公司';
                                               } else {
                                                 _payCostUnitController.text =
-                                                '';
+                                                    '';
                                                 _paymentProjectController.text =
-                                                '';
+                                                    '';
                                                 showAlertDialog(context);
                                               }
                                             });
@@ -235,37 +208,13 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                   onSaved: (value) {},
                                   enabled: false,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        '地区码：',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      DirectSelect(
-                                          itemExtent: 45.0,
-                                          selectedIndex: selectedIndex1,
-                                          child: MySelectionItem(
-                                            isForList: false,
-                                            title: elements1[selectedIndex1],
-                                          ),
-                                          onSelectedItemChanged: (index) {
-                                            setState(() {
-                                              selectedIndex1 = index;
-                                            });
-                                          },
-                                          items: _buildItems1()),
-                                    ],
-                                  ),
-                                ),
                                 TextFormField(
                                   autofocus: true,
                                   decoration: InputDecoration(
                                     labelText: '用户编号',
                                     labelStyle: TextStyle(fontSize: 18),
                                     helperText: '',
-                                    hintText: '16位用户编号',
+                                    hintText: '8-10位用户编号',
                                   ),
                                   onSaved: (value) {
                                     _userId = value;
@@ -314,45 +263,3 @@ class _ElectricityPageState extends State<ElectricityPage> {
     );
   }
 }
-
-class MySelectionItem extends StatelessWidget {
-  final String title;
-  final bool isForList;
-
-  const MySelectionItem({Key key, this.title, this.isForList = true})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 46.0,
-      child: isForList
-          ? Padding(
-        child: _buildItem(context),
-        padding: EdgeInsets.all(10.0),
-      )
-          : Card(
-        elevation: 0,
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Stack(
-          children: <Widget>[
-            _buildItem(context),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Icon(Icons.arrow_drop_down),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  _buildItem(BuildContext context) {
-    return Container(
-      width: 120,
-      alignment: Alignment.center,
-      child: Text(title, style: TextStyle(fontSize: 18),),
-    );
-  }
-}
-

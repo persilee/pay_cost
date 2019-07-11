@@ -43,6 +43,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.2"
+  direct_select:
+    dependency: "direct main"
+    description:
+      name: direct_select
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   easy_dialog:
     dependency: "direct main"
     description:
