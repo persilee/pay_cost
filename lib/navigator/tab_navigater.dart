@@ -41,13 +41,15 @@ class _TabNavigatorState extends State<TabNavigator> {
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: _defaultColor,
+              icon: Image(
+                width: 46,
+                height: 46,
+                image: AssetImage('assets/images/shouye.png'),
               ),
-              activeIcon: Icon(
-                Icons.home,
-                color: _activeColor,
+              activeIcon: Image(
+                width: 46,
+                height: 46,
+                image: AssetImage('assets/images/shouye.png'),
               ),
               title: Text(
                 '首页',
@@ -58,13 +60,15 @@ class _TabNavigatorState extends State<TabNavigator> {
               ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: _defaultColor,
+              icon: Image(
+                width: 42,
+                height: 42,
+                image: AssetImage('assets/images/jilu.png'),
               ),
-              activeIcon: Icon(
-                Icons.search,
-                color: _activeColor,
+              activeIcon: Image(
+                width: 42,
+                height: 42,
+                image: AssetImage('assets/images/jilu.png'),
               ),
               title: Text(
                 '记录',
@@ -75,13 +79,15 @@ class _TabNavigatorState extends State<TabNavigator> {
               ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_circle,
-                color: _defaultColor,
+              icon: Image(
+                width: 46,
+                height: 46,
+                image: AssetImage('assets/images/wode-copy.png'),
               ),
-              activeIcon: Icon(
-                Icons.account_circle,
-                color: _activeColor,
+              activeIcon: Image(
+                width: 46,
+                height: 46,
+                image: AssetImage('assets/images/wode-copy.png'),
               ),
               title: Text(
                 '我的',

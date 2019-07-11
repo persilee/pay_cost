@@ -4,6 +4,7 @@ import 'package:pay_cost/dao/home_dao.dart';
 import 'package:pay_cost/model/home_model.dart';
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:pay_cost/pages/electricity_page.dart';
+import 'package:pay_cost/pages/fuel_gas_page.dart';
 import 'package:pay_cost/pages/water_page.dart';
 
 const APPBAR_SCROLL_OFFSET = 160;
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(20, 160, 20, 20),
                         child: Container(
-                          height: 160,
+                          height: 180,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
@@ -137,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                                   '常规缴费',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                                 Padding(
@@ -157,13 +158,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage('assets/images/shuifei.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '水费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -177,13 +180,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage('assets/images/dianfei.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '电费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -191,19 +196,21 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        showAlertDialog(context);
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => FuelGasPage()));
                                       },
                                       child:Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage('assets/images/ranqifei.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '燃气费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -217,13 +224,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage('assets/images/shoujichongzhi.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top:10)),
                                             Text(
                                               '手机充值',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -237,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 340, 20, 20),
+                        padding: EdgeInsets.fromLTRB(20, 360, 20, 20),
                         child: Container(
                           height: 400,
                           child: Container(
@@ -249,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                                   '便捷缴费',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                   ),
                                 ),
                                 Padding(
@@ -257,7 +266,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
@@ -267,13 +276,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/shuifei.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '水费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -287,13 +298,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/dianfei.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '电费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -307,13 +320,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/ranqifei.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '燃气费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -327,13 +342,15 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/youxiandianshi.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
-                                              '有线电视费',
-                                              style: TextStyle(fontSize: 12),
+                                              '有线电视',
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -346,7 +363,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
@@ -356,73 +373,81 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/wuye.png'),
                                             ),
-                                            Text(
-                                              '手机充值',
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        showAlertDialog(context);
-                                      },
-                                      child:Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
-                                            ),
-                                            Text(
-                                              '通讯费',
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        showAlertDialog(context);
-                                      },
-                                      child:Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
-                                            ),
-                                            Text(
-                                              '教育考试费',
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        showAlertDialog(context);
-                                      },
-                                      child:Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
-                                            ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '物业费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/tongxun.png'),
+                                            ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Text(
+                                              '通讯费',
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/jiaoyu.png'),
+                                            ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Text(
+                                              '教育考试',
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child:Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/shoujichongzhi.png'),
+                                            ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Text(
+                                              '手机充值',
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -440,16 +465,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.fromLTRB(18, 12, 22, 10),
+                                        padding: EdgeInsets.fromLTRB(16, 12, 22, 10),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/dangfeijiaona.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '党费',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -460,16 +487,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.fromLTRB(12, 10, 0, 6),
                                         child: Column(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.ac_unit,
-                                              size: 50,
+                                            Image(
+                                              width: 46,
+                                              height: 46,
+                                              image: AssetImage('assets/images/qita.png'),
                                             ),
+                                            Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '其他',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),

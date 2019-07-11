@@ -176,9 +176,9 @@ class _WaterPageState extends State<WaterPage> {
                                                     '深圳水务集团';
                                               } else if (_selectCity == '广州市') {
                                                 _payCostUnitController.text =
-                                                    '广州市水费';
+                                                    '增城新和自来水有限公司水费';
                                                 _paymentProjectController.text =
-                                                    '广州水务集团';
+                                                    '增城新和自来水有限公司';
                                               } else {
                                                 _payCostUnitController.text =
                                                     '';
@@ -214,10 +214,12 @@ class _WaterPageState extends State<WaterPage> {
                                   enabled: false,
                                 ),
                                 TextFormField(
+                                  autofocus: true,
                                   decoration: InputDecoration(
                                     labelText: '用户编号',
                                     labelStyle: TextStyle(fontSize: 18),
                                     helperText: '',
+                                    hintText: '8-10位用户编号',
                                   ),
                                   onSaved: (value) {
                                     _userId = value;
