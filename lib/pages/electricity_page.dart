@@ -144,11 +144,26 @@ class _ElectricityPageState extends State<ElectricityPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            '电费',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image(
+                                  width: 26,
+                                  height: 26,
+                                  image: AssetImage('assets/images/dianfei.png'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                ),
+                                Text(
+                                  '电费',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Padding(
@@ -296,7 +311,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Text(
                         '下一步',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                       onPressed: submitRegisterForm,
                       splashColor: Colors.grey[200],

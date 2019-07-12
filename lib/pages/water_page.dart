@@ -122,11 +122,26 @@ class _WaterPageState extends State<WaterPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            '水费',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image(
+                                  width: 24,
+                                  height: 24,
+                                  image: AssetImage('assets/images/shuifei.png'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                ),
+                                Text(
+                                  '水费',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Padding(
@@ -250,7 +265,7 @@ class _WaterPageState extends State<WaterPage> {
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Text(
                         '下一步',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                       onPressed: submitRegisterForm,
                       splashColor: Colors.grey[200],
