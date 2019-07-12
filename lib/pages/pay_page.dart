@@ -210,7 +210,7 @@ class _PayPageState extends State<PayPage> {
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Text(
                         '缴 费',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                       onPressed: () { },
                       splashColor: Colors.grey[200],

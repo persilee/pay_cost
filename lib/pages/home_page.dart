@@ -270,7 +270,9 @@ class _HomePageState extends State<HomePage> {
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
-                                        showAlertDialog(context);
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) => WaterPage()),
+                                        );
                                       },
                                       child:Padding(
                                         padding: EdgeInsets.all(10),
@@ -292,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        showAlertDialog(context);
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ElectricityPage()));
                                       },
                                       child:Padding(
                                         padding: EdgeInsets.all(10),
@@ -314,7 +316,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        showAlertDialog(context);
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => FuelGasPage()));
                                       },
                                       child:Padding(
                                         padding: EdgeInsets.all(10),
