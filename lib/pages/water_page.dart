@@ -91,7 +91,7 @@ class _WaterPageState extends State<WaterPage> {
         elevation: 0.0,
       ),
       body: Container(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Stack(
               children: <Widget>[
@@ -103,7 +103,7 @@ class _WaterPageState extends State<WaterPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 460,
+                    height: 440,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
