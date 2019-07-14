@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
       title: '工易付缴费',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        highlightColor: Color.fromRGBO(255, 255, 255, 0.6),
+        splashColor: Colors.blue[100],
       ),
       home: TabNavigator(),
     );

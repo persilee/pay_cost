@@ -113,7 +113,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
         elevation: 0.0,
       ),
       body: Container(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Stack(
               children: <Widget>[
@@ -125,7 +125,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 560,
+                    height: 500,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
