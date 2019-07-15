@@ -6,6 +6,7 @@ import 'package:easy_dialog/easy_dialog.dart';
 import 'package:pay_cost/pages/electricity_page.dart';
 import 'package:pay_cost/pages/fuel_gas_page.dart';
 import 'package:pay_cost/pages/water_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const APPBAR_SCROLL_OFFSET = 160;
 
@@ -52,7 +53,20 @@ class _HomePageState extends State<HomePage> {
     return null;
   }
 
+  Future<String> get() async {
+    var userName;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userName = await prefs.getString('name');
+    print(userName);
+    return userName;
+  }
+
   void showAlertDialog(BuildContext context) {
+    Future<String> userName = get();
+    userName.then((String userName) {
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text("数据获取成功：$userName")));
+    });
     EasyDialog(
       description: Text(
         "功能暂未开放，敬请期待",
