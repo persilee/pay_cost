@@ -1,6 +1,7 @@
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:pay_cost/pages/about_page.dart';
+import 'package:pay_cost/pages/login_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyPage extends StatefulWidget {
@@ -33,13 +34,14 @@ class _MyPageState extends State<MyPage> {
       key: _myPageState,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('我的'),
+        title: Text('我的', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+        iconTheme: IconThemeData(size: 18),
       ),
       body: Container(
         child: Column(
           children: <Widget>[
             Container(
-              height: 140,
+              height: 100,
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
               child: Row(
                 children: <Widget>[
@@ -48,8 +50,8 @@ class _MyPageState extends State<MyPage> {
                   ),
                   Image.asset(
                     'assets/images/morentouxiang.png',
-                    width: 80,
-                    height: 80,
+                    width: 60,
+                    height: 60,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 20),
@@ -58,7 +60,7 @@ class _MyPageState extends State<MyPage> {
                     'gongyifu',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -123,7 +125,7 @@ class _MyPageState extends State<MyPage> {
                 ).show(context);
               },
               child: Container(
-                height: 80,
+                height: 60,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -135,7 +137,7 @@ class _MyPageState extends State<MyPage> {
                   ],
                 ),
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 6),
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -144,14 +146,14 @@ class _MyPageState extends State<MyPage> {
                         children: <Widget>[
                           Image.asset(
                             'assets/images/huabanfuben.png',
-                            height: 24,
-                            width: 24,
+                            height: 18,
+                            width: 18,
                           ),
                           Padding(padding: EdgeInsets.only(right: 10)),
                           Text(
                             '客服电话',
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -161,7 +163,7 @@ class _MyPageState extends State<MyPage> {
                     Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.grey,
-                      size: 20,
+                      size: 16,
                     )
                   ],
                 ),
@@ -183,9 +185,9 @@ class _MyPageState extends State<MyPage> {
                     ),
                   ],
                 ),
-                height: 80,
+                height: 60,
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 6),
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -194,14 +196,14 @@ class _MyPageState extends State<MyPage> {
                         children: <Widget>[
                           Image.asset(
                             'assets/images/guanyu.png',
-                            height: 24,
-                            width: 24,
+                            height: 18,
+                            width: 18,
                           ),
                           Padding(padding: EdgeInsets.only(right: 10)),
                           Text(
-                            '关于黑蚂蚁缴费',
+                            '关于畅饮缴费',
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -211,7 +213,7 @@ class _MyPageState extends State<MyPage> {
                     Icon(
                       Icons.arrow_forward_ios,
                       color: Colors.grey,
-                      size: 20,
+                      size: 16,
                     )
                   ],
                 ),
@@ -228,13 +230,13 @@ class _MyPageState extends State<MyPage> {
                   ),
                 ],
               ),
-              height: 60,
-              margin: EdgeInsets.fromLTRB(0, 60, 0, 6),
+              height: 50,
+              margin: EdgeInsets.fromLTRB(0, 40, 0, 6),
               child: Material(
                 color: Colors.white,
                 child: InkWell(
                   onTap: () {
-                    print('退出');
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -242,7 +244,7 @@ class _MyPageState extends State<MyPage> {
                       Text(
                         '退出登录',
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: Colors.black54,
                             fontWeight: FontWeight.w500),
                       ),

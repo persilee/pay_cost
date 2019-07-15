@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pay_cost/pages/agreement_page.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -10,14 +11,15 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('关于'),
+        title: Text('关于', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
         elevation: 0,
+        iconTheme: IconThemeData(size: 16, color: Colors.white),
       ),
       body: Container(
         child: Column(
           children: <Widget>[
             Container(
-              height: 140,
+              height: 110,
               width: double.infinity,
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
               child: Column(
@@ -26,14 +28,14 @@ class _AboutPageState extends State<AboutPage> {
                 children: <Widget>[
                   Image.asset(
                     'assets/images/morentouxiang.png',
-                    width: 80,
-                    height: 80,
+                    width: 60,
+                    height: 60,
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
                   ),
                   Text(
-                    '黑蚂蚁缴费V1.0.1',
+                    '畅饮缴费V1.0.1',
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 16,
@@ -47,10 +49,10 @@ class _AboutPageState extends State<AboutPage> {
             ),
             GestureDetector(
               onTap: () {
-                print('v1.0.1');
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AgreementPage()));
               },
               child: Container(
-                height: 80,
+                height: 60,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [

@@ -57,9 +57,10 @@ class _HomePageState extends State<HomePage> {
       description: Text(
         "功能暂未开放，敬请期待",
         textScaleFactor: 1.2,
+        style: TextStyle(fontSize: 14, color: Colors.black54),
         textAlign: TextAlign.center,
       ),
-      height: 160,
+      height: 140,
     ).show(context);
   }
 
@@ -86,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                       Opacity(
                         opacity: appBarAlpha,
                         child: Container(
-                          height: 80,
+                          height: 60,
                           decoration: BoxDecoration(color: Colors.white),
                           child: Center(
                             child: Padding(
@@ -97,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Container(
-                        height: 200,
+                        height: 170,
                         child: Swiper(
                           itemCount: _imageUrls.length,
                           autoplay: true,
@@ -113,9 +114,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 160, 20, 20),
+                        padding: EdgeInsets.fromLTRB(20, 120, 20, 20),
                         child: Container(
-                          height: 180,
+                          height: 130,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
@@ -130,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(18),
+                            padding: EdgeInsets.all(12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -138,11 +139,11 @@ class _HomePageState extends State<HomePage> {
                                   '常规缴费',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.only(top: 6),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -155,18 +156,18 @@ class _HomePageState extends State<HomePage> {
                                         );
                                       },
                                       child: Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 50,
-                                              height: 50,
+                                              width: 36,
+                                              height: 36,
                                               image: AssetImage('assets/images/shuifei.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '水费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 14, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -177,18 +178,18 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ElectricityPage()));
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 50,
-                                              height: 50,
+                                              width: 36,
+                                              height: 36,
                                               image: AssetImage('assets/images/dianfei.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '电费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 14, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -199,18 +200,18 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => FuelGasPage()));
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 50,
-                                              height: 50,
+                                              width: 36,
+                                              height: 36,
                                               image: AssetImage('assets/images/ranqifei.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '燃气费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 14, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -221,18 +222,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 50,
-                                              height: 50,
+                                              width: 36,
+                                              height: 36,
                                               image: AssetImage('assets/images/shoujichongzhi.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top:10)),
+                                            Padding(padding: EdgeInsets.only(top:6)),
                                             Text(
                                               '手机充值',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                              style: TextStyle(fontSize: 14, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -246,11 +247,11 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20, 360, 20, 20),
+                        padding: EdgeInsets.fromLTRB(20, 250, 20, 20),
                         child: Container(
-                          height: 400,
+                          height: 300,
                           child: Container(
-                            padding: EdgeInsets.all(18),
+                            padding: EdgeInsets.all(12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -258,11 +259,11 @@ class _HomePageState extends State<HomePage> {
                                   '便捷缴费',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.only(top: 6),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -275,18 +276,18 @@ class _HomePageState extends State<HomePage> {
                                         );
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/shuifei.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '水费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -297,18 +298,18 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ElectricityPage()));
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/dianfei.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '电费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -319,18 +320,18 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => FuelGasPage()));
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/ranqifei.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '燃气费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -341,18 +342,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/youxiandianshi.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '有线电视',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -361,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.only(top: 6),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -372,18 +373,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/wuye.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '物业费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -394,18 +395,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/tongxun.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '通讯费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -416,18 +417,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/jiaoyu.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '教育考试',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -438,18 +439,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/shoujichongzhi.png'),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: 10)),
+                                            Padding(padding: EdgeInsets.only(top: 6)),
                                             Text(
                                               '手机充值',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 1,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 1,),
                                             ),
                                           ],
                                         ),
@@ -458,7 +459,7 @@ class _HomePageState extends State<HomePage> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.only(top: 6),
                                 ),
                                 Row(
                                   children: <Widget>[
@@ -467,18 +468,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.fromLTRB(16, 12, 22, 10),
+                                        padding: EdgeInsets.fromLTRB(12, 12, 22, 10),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/dangfeijiaona.png'),
                                             ),
                                             Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '党费',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),
@@ -489,18 +490,18 @@ class _HomePageState extends State<HomePage> {
                                         showAlertDialog(context);
                                       },
                                       child:Padding(
-                                        padding: EdgeInsets.fromLTRB(12, 10, 0, 6),
+                                        padding: EdgeInsets.fromLTRB(24, 10, 0, 6),
                                         child: Column(
                                           children: <Widget>[
                                             Image(
-                                              width: 46,
-                                              height: 46,
+                                              width: 32,
+                                              height: 32,
                                               image: AssetImage('assets/images/qita.png'),
                                             ),
                                             Padding(padding: EdgeInsets.only(top: 10)),
                                             Text(
                                               '其他',
-                                              style: TextStyle(fontSize: 16, color: Colors.black54, letterSpacing: 2,),
+                                              style: TextStyle(fontSize: 12, color: Colors.black54, letterSpacing: 2,),
                                             ),
                                           ],
                                         ),

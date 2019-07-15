@@ -34,9 +34,10 @@ class _FuelGasPageState extends State<FuelGasPage> {
         description: Text(
           "当前户号暂未查询到账单",
           textScaleFactor: 1.2,
+          style: TextStyle(fontSize: 14, color: Colors.black54),
           textAlign: TextAlign.center,
         ),
-        height: 160,
+        height: 140,
       ).show(context);
 
 //      Navigator.of(context).push(
@@ -64,9 +65,10 @@ class _FuelGasPageState extends State<FuelGasPage> {
       description: Text(
         "功能暂未开放，敬请期待",
         textScaleFactor: 1.2,
+        style: TextStyle(fontSize: 14, color: Colors.black54),
         textAlign: TextAlign.center,
       ),
-      height: 160,
+      height: 140,
     ).show(context);
   }
 
@@ -87,7 +89,7 @@ class _FuelGasPageState extends State<FuelGasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('燃气费'),
+        title: Text('燃气费', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
         elevation: 0.0,
       ),
       body: Container(
@@ -127,8 +129,8 @@ class _FuelGasPageState extends State<FuelGasPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image(
-                                  width: 24,
-                                  height: 24,
+                                  width: 20,
+                                  height: 20,
                                   image: AssetImage('assets/images/ranqifei.png'),
                                 ),
                                 Padding(
@@ -138,19 +140,19 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                   '燃气费',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 15),
+                            padding: EdgeInsets.only(top: 10),
                           ),
                           Divider(
                               height: 1.0, indent: 0.0, color: Colors.black26),
                           Padding(
-                            padding: EdgeInsets.only(top: 20),
+                            padding: EdgeInsets.only(top: 10),
                           ),
                           Form(
                             key: registerFormKey,
@@ -162,14 +164,14 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                     children: <Widget>[
                                       Text(
                                         '缴费城市：',
-                                        style: TextStyle(fontSize: 18),
+                                        style: TextStyle(fontSize: 16),
                                       ),
                                       FlatButton.icon(
                                         label: Text(
                                           _selectCity,
                                           style: TextStyle(
                                             fontWeight: FontWeight.normal,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                           ),
                                         ),
                                         icon: Icon(Icons.arrow_drop_down),
@@ -207,7 +209,7 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                   controller: _paymentProjectController,
                                   decoration: InputDecoration(
                                     labelText: '缴费项目',
-                                    labelStyle: TextStyle(fontSize: 18),
+                                    labelStyle: TextStyle(fontSize: 16),
                                     helperText: '',
                                   ),
                                   onSaved: (value) {},
@@ -217,17 +219,17 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                   controller: _payCostUnitController,
                                   decoration: InputDecoration(
                                     labelText: '收费单位',
-                                    labelStyle: TextStyle(fontSize: 18),
+                                    labelStyle: TextStyle(fontSize: 16),
                                     helperText: '',
                                   ),
                                   onSaved: (value) {},
                                   enabled: false,
                                 ),
                                 TextFormField(
-                                  autofocus: true,
+                                  autofocus: false,
                                   decoration: InputDecoration(
                                     labelText: '用户编号',
-                                    labelStyle: TextStyle(fontSize: 18),
+                                    labelStyle: TextStyle(fontSize: 16),
                                     helperText: '',
                                     hintText: '8-10位用户编号',
                                   ),
@@ -248,19 +250,19 @@ class _FuelGasPageState extends State<FuelGasPage> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: 12),
+              padding: EdgeInsets.only(top: 6),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
                       child: Text(
                         '下一步',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                       onPressed: submitRegisterForm,
                       splashColor: Colors.grey[200],

@@ -11,7 +11,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('缴费记录'),
+        title: Text('缴费记录', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
       ),
       body: CustomScrollView(
         slivers: <Widget>[
@@ -33,16 +33,16 @@ class SliverListPay extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         return Container(
-          padding: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(top: 4),
           child: Padding(
-            padding: EdgeInsets.only(bottom: 6),
+            padding: EdgeInsets.only(bottom: 4),
             child: Material(
                 elevation: 16,
                 shadowColor: Colors.grey.withOpacity(0.1),
                 type: MaterialType.card,
                 borderRadius: BorderRadius.circular(2.0),
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -52,16 +52,14 @@ class SliverListPay extends StatelessWidget {
                           Text(payList[index].date, style: TextStyle(color: Colors.grey),)
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(bottom: 6)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                              '${payList[index].type} - ${payList[index].amount}元', style: TextStyle(fontSize: 20, fontWeight:FontWeight.bold),),
+                              '${payList[index].type} - ${payList[index].amount}元', style: TextStyle(fontSize: 16, fontWeight:FontWeight.bold),),
                           Text(payList[index].info, style: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.bold),)
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(bottom: 6)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
