@@ -56,9 +56,10 @@ class _ElectricityPageState extends State<ElectricityPage> {
         description: Text(
           "当前户号暂未查询到账单",
           textScaleFactor: 1.2,
+          style: TextStyle(fontSize: 14, color: Colors.black54),
           textAlign: TextAlign.center,
         ),
-        height: 160,
+        height: 140,
       ).show(context);
 
 //      Navigator.of(context).push(
@@ -86,9 +87,10 @@ class _ElectricityPageState extends State<ElectricityPage> {
       description: Text(
         "功能暂未开放，敬请期待",
         textScaleFactor: 1.2,
+        style: TextStyle(fontSize: 14, color: Colors.black54),
         textAlign: TextAlign.center,
       ),
-      height: 160,
+      height: 140,
     ).show(context);
   }
 
@@ -109,7 +111,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('电费'),
+        title: Text('电费',  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
         elevation: 0.0,
       ),
       body: Container(
@@ -118,14 +120,14 @@ class _ElectricityPageState extends State<ElectricityPage> {
             Stack(
               children: <Widget>[
                 Container(
-                  height: 160,
+                  height: 120,
                   decoration:
                       BoxDecoration(color: Theme.of(context).primaryColor),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
+                  padding: EdgeInsets.fromLTRB(20, 30, 20, 20),
                   child: Container(
-                    height: 500,
+                    height: 470,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -149,8 +151,8 @@ class _ElectricityPageState extends State<ElectricityPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Image(
-                                  width: 26,
-                                  height: 26,
+                                  width: 20,
+                                  height: 20,
                                   image: AssetImage('assets/images/dianfei.png'),
                                 ),
                                 Padding(
@@ -160,31 +162,31 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                   '电费',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 15),
+                            padding: EdgeInsets.only(top: 10),
                           ),
                           Divider(
                               height: 1.0, indent: 0.0, color: Colors.black26),
                           Padding(
-                            padding: EdgeInsets.only(top: 20),
+                            padding: EdgeInsets.only(top: 6),
                           ),
                           Form(
                             key: registerFormKey,
                             child: Column(
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                  padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
                                   child: Row(
                                     children: <Widget>[
                                       Text(
                                         '缴费城市：',
-                                        style: TextStyle(fontSize: 18),
+                                        style: TextStyle(fontSize: 16),
                                       ),
                                       FlatButton.icon(
                                         icon: Icon(Icons.arrow_drop_down),
@@ -192,7 +194,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                           _selectCity,
                                           style: TextStyle(
                                             fontWeight: FontWeight.normal,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                           ),
                                         ),
                                         highlightColor: Colors.transparent,
@@ -234,7 +236,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                   controller: _paymentProjectController,
                                   decoration: InputDecoration(
                                     labelText: '缴费项目',
-                                    labelStyle: TextStyle(fontSize: 18),
+                                    labelStyle: TextStyle(fontSize: 16),
                                     helperText: '',
                                   ),
                                   onSaved: (value) {},
@@ -244,7 +246,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                   controller: _payCostUnitController,
                                   decoration: InputDecoration(
                                     labelText: '收费单位',
-                                    labelStyle: TextStyle(fontSize: 18),
+                                    labelStyle: TextStyle(fontSize: 16),
                                     helperText: '',
                                   ),
                                   onSaved: (value) {},
@@ -256,7 +258,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                     children: <Widget>[
                                       Text(
                                         '地区码：',
-                                        style: TextStyle(fontSize: 18),
+                                        style: TextStyle(fontSize: 16),
                                       ),
                                       DirectSelect(
                                           itemExtent: 45.0,
@@ -275,10 +277,10 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                   ),
                                 ),
                                 TextFormField(
-                                  autofocus: true,
+                                  autofocus: false,
                                   decoration: InputDecoration(
                                     labelText: '用户编号',
-                                    labelStyle: TextStyle(fontSize: 18),
+                                    labelStyle: TextStyle(fontSize: 16),
                                     helperText: '',
                                     hintText: '16位用户编号',
                                   ),
@@ -299,19 +301,19 @@ class _ElectricityPageState extends State<ElectricityPage> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: 12),
+              padding: EdgeInsets.only(top: 10),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
                       child: Text(
                         '下一步',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                       onPressed: submitRegisterForm,
                       splashColor: Colors.grey[200],
@@ -366,7 +368,7 @@ class MySelectionItem extends StatelessWidget {
     return Container(
       width: 120,
       alignment: Alignment.center,
-      child: Text(title, style: TextStyle(fontSize: 18),),
+      child: Text(title, style: TextStyle(fontSize: 16),),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pay_cost/pages/home_page.dart';
+import 'package:pay_cost/pages/login_page.dart';
 import 'package:pay_cost/pages/my_page.dart';
 import 'package:pay_cost/pages/search_page.dart';
 
@@ -42,58 +43,58 @@ class _TabNavigatorState extends State<TabNavigator> {
           items: [
             BottomNavigationBarItem(
               icon: Image(
-                width: 46,
-                height: 46,
+                width: 34,
+                height: 34,
                 image: AssetImage('assets/images/shouye.png'),
               ),
               activeIcon: Image(
-                width: 46,
-                height: 46,
+                width: 34,
+                height: 34,
                 image: AssetImage('assets/images/shouye.png'),
               ),
               title: Text(
                 '首页',
                 style: TextStyle(
                   color: _currentIndex != 0 ? _defaultColor : _activeColor,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),
             BottomNavigationBarItem(
               icon: Image(
-                width: 42,
-                height: 42,
+                width: 34,
+                height: 34,
                 image: AssetImage('assets/images/jilu.png'),
               ),
               activeIcon: Image(
-                width: 42,
-                height: 42,
+                width: 34,
+                height: 34,
                 image: AssetImage('assets/images/jilu.png'),
               ),
               title: Text(
                 '记录',
                 style: TextStyle(
                   color: _currentIndex != 1 ? _defaultColor : _activeColor,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),
             BottomNavigationBarItem(
               icon: Image(
-                width: 46,
-                height: 46,
+                width: 34,
+                height: 34,
                 image: AssetImage('assets/images/wode-copy.png'),
               ),
               activeIcon: Image(
-                width: 46,
-                height: 46,
+                width: 34,
+                height: 34,
                 image: AssetImage('assets/images/wode-copy.png'),
               ),
               title: Text(
                 '我的',
                 style: TextStyle(
                   color: _currentIndex != 2 ? _defaultColor : _activeColor,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
             ),

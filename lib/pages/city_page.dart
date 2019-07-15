@@ -116,7 +116,7 @@ class _CityPageState extends State<CityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('选择城市'),
+        title: Text('选择城市',  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
       ),
       body: Column(
         children: <Widget>[
