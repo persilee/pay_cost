@@ -11,7 +11,7 @@ class TabNavigator extends StatefulWidget {
 
 class _TabNavigatorState extends State<TabNavigator> {
   final _defaultColor = Colors.grey;
-  final _activeColor = Colors.blue;
+  final _activeColor = Color.fromRGBO(0, 180, 184, 1);
   int _currentIndex = 0;
   final PageController _controller = PageController(
     initialPage: 0,
@@ -43,58 +43,58 @@ class _TabNavigatorState extends State<TabNavigator> {
           items: [
             BottomNavigationBarItem(
               icon: Image(
-                width: 34,
-                height: 34,
-                image: AssetImage('assets/images/shouye.png'),
+                width: 26,
+                height: 26,
+                image: AssetImage('assets/images/shouye_actived.png'),
               ),
               activeIcon: Image(
-                width: 34,
-                height: 34,
+                width: 26,
+                height: 26,
                 image: AssetImage('assets/images/shouye.png'),
               ),
               title: Text(
                 '首页',
                 style: TextStyle(
                   color: _currentIndex != 0 ? _defaultColor : _activeColor,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
             ),
             BottomNavigationBarItem(
               icon: Image(
-                width: 34,
-                height: 34,
-                image: AssetImage('assets/images/jilu.png'),
+                width: 26,
+                height: 26,
+                image: AssetImage('assets/images/jilu_actived.png'),
               ),
               activeIcon: Image(
-                width: 34,
-                height: 34,
+                width: 26,
+                height: 26,
                 image: AssetImage('assets/images/jilu.png'),
               ),
               title: Text(
                 '记录',
                 style: TextStyle(
                   color: _currentIndex != 1 ? _defaultColor : _activeColor,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
             ),
             BottomNavigationBarItem(
               icon: Image(
-                width: 34,
-                height: 34,
-                image: AssetImage('assets/images/wode-copy.png'),
+                width: 26,
+                height: 26,
+                image: AssetImage('assets/images/wode_actived.png'),
               ),
               activeIcon: Image(
-                width: 34,
-                height: 34,
-                image: AssetImage('assets/images/wode-copy.png'),
+                width: 26,
+                height: 26,
+                image: AssetImage('assets/images/wode.png'),
               ),
               title: Text(
                 '我的',
                 style: TextStyle(
                   color: _currentIndex != 2 ? _defaultColor : _activeColor,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
             ),

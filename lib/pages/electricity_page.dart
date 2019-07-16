@@ -14,10 +14,11 @@ class _ElectricityPageState extends State<ElectricityPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '深圳市';
+  String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
-  String _currentMenuItem = '请选择';
+  bool _visible = true;
+  double _height = 410;
   final elements1 = [
     "罗湖区",
     "福田区",
@@ -97,8 +98,8 @@ class _ElectricityPageState extends State<ElectricityPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '深圳市电费';
-    _payCostUnitController.text = '深圳供电局';
+    _paymentProjectController.text = '浙江省电费';
+    _payCostUnitController.text = '国网浙江省电力公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -127,7 +128,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 30, 20, 20),
                   child: Container(
-                    height: 470,
+                    height: _height,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -206,19 +207,25 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '深圳市'
+                                                  ? '金华市'
                                                   : value.name);
-                                              if (_selectCity == '深圳市') {
+                                              if (_selectCity == '金华市') {
+                                                _visible = true;
+                                                _height = 410;
+                                                _payCostUnitController.text =
+                                                '浙江省电费';
+                                                _paymentProjectController.text =
+                                                '国网浙江省电力公司';
+                                              } else if (_selectCity == '深圳市') {
+                                                _visible = false;
+                                                _height = 460;
                                                 _payCostUnitController.text =
                                                 '深圳市电费';
                                                 _paymentProjectController.text =
                                                 '深圳供电局';
-                                              } else if (_selectCity == '广州市') {
-                                                _payCostUnitController.text =
-                                                '广州市电费';
-                                                _paymentProjectController.text =
-                                                '易票联支付技术有限公司';
                                               } else {
+                                                _visible = true;
+                                                _height = 410;
                                                 _payCostUnitController.text =
                                                 '';
                                                 _paymentProjectController.text =
@@ -252,28 +259,31 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                   onSaved: (value) {},
                                   enabled: false,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        '地区码：',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                      DirectSelect(
-                                          itemExtent: 45.0,
-                                          selectedIndex: selectedIndex1,
-                                          child: MySelectionItem(
-                                            isForList: false,
-                                            title: elements1[selectedIndex1],
-                                          ),
-                                          onSelectedItemChanged: (index) {
-                                            setState(() {
-                                              selectedIndex1 = index;
-                                            });
-                                          },
-                                          items: _buildItems1()),
-                                    ],
+                                Offstage(
+                                  offstage: _visible,
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          '地区码：',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        DirectSelect(
+                                            itemExtent: 45.0,
+                                            selectedIndex: selectedIndex1,
+                                            child: MySelectionItem(
+                                              isForList: false,
+                                              title: elements1[selectedIndex1],
+                                            ),
+                                            onSelectedItemChanged: (index) {
+                                              setState(() {
+                                                selectedIndex1 = index;
+                                              });
+                                            },
+                                            items: _buildItems1()),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 TextFormField(

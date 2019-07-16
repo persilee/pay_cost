@@ -64,11 +64,16 @@ flutter:
     - assets/images/wuye.png
     - assets/images/youxiandianshi.png
     - assets/images/shouye.png
+    - assets/images/shouye_actived.png
     - assets/images/jilu.png
-    - assets/images/wode-copy.png
+    - assets/images/jilu_actived.png
+    - assets/images/wode_actived.png
+    - assets/images/wode.png
     - assets/images/morentouxiang.png
     - assets/images/huabanfuben.png
     - assets/images/guanyu.png
+    - assets/images/banner.png
+    - assets/images/appIcon.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

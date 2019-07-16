@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pay_cost/pages/login_page.dart';
 import '../model/pay_list_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pay_cost/util/toast.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -7,21 +10,56 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  String _name = '';
+  bool _visible = false;
+
+  Future<Null> _onRefresh() async {
+    await Future.delayed(Duration(seconds: 2), () {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _prefs.then((SharedPreferences prefs) {
+      _name = (prefs.getString('name') ?? '');
+      print(_name);
+      if( _name == '' ) {
+        Toast.show(context, "您还没有登录！");
+        setState(() {
+          _visible = false;
+        });
+        _onRefresh();
+      }else{
+        setState(() {
+          _visible = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('缴费记录', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverSafeArea(
-            sliver: SliverPadding(
-              padding: EdgeInsets.all(6),
-              sliver: SliverListPay(),
+      body: Offstage(
+        offstage: !_visible,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverSafeArea(
+              sliver: SliverPadding(
+                padding: EdgeInsets.all(6),
+                sliver: SliverListPay(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -45,27 +83,32 @@ class SliverListPay extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
                   child: Column(
                     children: <Widget>[
+                      Padding(padding: EdgeInsets.only(bottom: 6)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('户号: ${payList[index].doorNo}'),
-                          Text(payList[index].date, style: TextStyle(color: Colors.grey),)
+                          Text(payList[index].unit, style: TextStyle(color: Colors.black54),),
+                          Text(payList[index].date, style: TextStyle(color: Colors.black54),)
                         ],
                       ),
+                      Padding(padding: EdgeInsets.only(bottom: 6)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                              '${payList[index].type} - ${payList[index].amount}元', style: TextStyle(fontSize: 16, fontWeight:FontWeight.bold),),
-                          Text(payList[index].info, style: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.bold),)
+                              '${payList[index].type}', style: TextStyle(fontSize: 16, fontWeight:FontWeight.bold, color: Colors.black87),),
+                          Text('- ￥${payList[index].amount}', style: TextStyle(fontSize: 16, fontWeight:FontWeight.bold, color: Colors.black87),)
                         ],
                       ),
+                      Padding(padding: EdgeInsets.only(bottom: 6)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(payList[index].unit),
+                          Text('户号: ${payList[index].doorNo}', style: TextStyle(color: Colors.black54),),
+                          Text(payList[index].info, style: TextStyle(fontSize: 14, color: Color.fromRGBO(0, 180, 184, 1)),)
                         ],
                       ),
+                      Padding(padding: EdgeInsets.only(bottom: 6)),
                     ],
                   ),
                 )),
