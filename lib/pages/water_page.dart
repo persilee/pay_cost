@@ -13,7 +13,7 @@ class _WaterPageState extends State<WaterPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '深圳市';
+  String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
 
@@ -75,8 +75,8 @@ class _WaterPageState extends State<WaterPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '深圳市水费';
-    _payCostUnitController.text = '深圳水务集团';
+    _paymentProjectController.text = '金华市水费';
+    _payCostUnitController.text = '金华市自来水公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -184,18 +184,18 @@ class _WaterPageState extends State<WaterPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '深圳市'
+                                                  ? '金华市'
                                                   : value.name);
-                                              if (_selectCity == '深圳市') {
+                                              if (_selectCity == '金华市') {
+                                                _payCostUnitController.text =
+                                                    '金华市水费';
+                                                _paymentProjectController.text =
+                                                    '金华市自来水公司';
+                                              } else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
                                                     '深圳市水费';
                                                 _paymentProjectController.text =
                                                     '深圳水务集团';
-                                              } else if (_selectCity == '广州市') {
-                                                _payCostUnitController.text =
-                                                    '增城新和自来水有限公司水费';
-                                                _paymentProjectController.text =
-                                                    '增城新和自来水有限公司';
                                               } else {
                                                 _payCostUnitController.text =
                                                     '';

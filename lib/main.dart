@@ -12,9 +12,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '工易付缴费',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromRGBO(0, 180, 184, 1),
         highlightColor: Color.fromRGBO(255, 255, 255, 0.6),
-        splashColor: Colors.blue[100],
+        splashColor: Color.fromRGBO(0, 180, 184, 0.5),
       ),
       home: TabNavigator(),
     );

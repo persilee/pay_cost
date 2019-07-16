@@ -8,8 +8,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="pay_cost"
-        android:icon="@mipmap/ic_launcher">
+        android:label="畅饮缴费"
+        android:icon="@mipmap/logo1">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -9,6 +9,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final _loginKey = GlobalKey<FormState>();
   String uName, uPwd;
   bool autoValidate = false;
@@ -51,13 +52,23 @@ class _LoginPageState extends State<LoginPage> {
         _loading = !_loading;
         autoValidate = true;
       });
-      if(uName == 'lsy' && uPwd == 'lsy123') {
-        save();
+      if(uName == 'CYUD201902469876' && uPwd == 'cyjf0016425') {
+        _save();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TabNavigator()));
       }else{
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage()));
         Toast.show(context, "用户名或密码不正确");
       }
+    });
+  }
+
+  Future<void> _save() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setString('name', uName);
+    prefs.setString('pwd', uPwd);
+
+    _prefs.then((SharedPreferences prefs) {
+      return (prefs.getString('name') ?? 'null');
     });
   }
 
@@ -129,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                         autovalidate: autoValidate,
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: 30.0,
                       ),
                       Container(
                         width: double.infinity,

@@ -11,9 +11,11 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('关于', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+        title: Text(
+          '关于',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         elevation: 0,
-        iconTheme: IconThemeData(size: 16, color: Colors.white),
       ),
       body: Container(
         child: Column(
@@ -26,11 +28,9 @@ class _AboutPageState extends State<AboutPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset(
-                    'assets/images/morentouxiang.png',
-                    width: 60,
-                    height: 60,
-                  ),
+              ClipOval(
+                child: Image.asset('assets/images/appIcon.png', height: 56, width: 56,),
+              ),
                   Padding(
                     padding: EdgeInsets.only(top: 10),
                   ),
@@ -49,7 +49,8 @@ class _AboutPageState extends State<AboutPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AgreementPage()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AgreementPage()));
               },
               child: Container(
                 height: 60,
