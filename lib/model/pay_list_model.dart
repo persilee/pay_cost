@@ -36,7 +36,7 @@ final List<PayListModel> payList  = [
   PayListModel(
     type: '燃气费',
     doorNo: '14******425',
-    unit: '金华市燃气集团股份有限公司',
+    unit: '金华市华威燃气有限公司',
     amount: '12.23',
     date: '2019-06-06 12:26:12',
     info: '缴费成功',

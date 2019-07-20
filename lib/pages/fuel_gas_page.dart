@@ -13,7 +13,7 @@ class _FuelGasPageState extends State<FuelGasPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '深圳市';
+  String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
 
@@ -75,8 +75,8 @@ class _FuelGasPageState extends State<FuelGasPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '深圳市燃气费';
-    _payCostUnitController.text = '深圳燃气集团股份有限公司';
+    _paymentProjectController.text = '华威燃气';
+    _payCostUnitController.text = '金华市华威燃气有限公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -184,9 +184,14 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '深圳市'
+                                                  ? '华威燃气'
                                                   : value.name);
-                                              if (_selectCity == '深圳市') {
+                                              if (_selectCity == '金华市') {
+                                                _payCostUnitController.text =
+                                                '金华市华威燃气有限公司';
+                                                _paymentProjectController.text =
+                                                '深圳燃气集团股份有限公司';
+                                              }else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
                                                     '深圳市燃气费';
                                                 _paymentProjectController.text =
