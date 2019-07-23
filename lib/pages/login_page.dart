@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         _loading = !_loading;
         autoValidate = true;
       });
-      if(uName == 'HWUD201902469876' && uPwd == 'hwjf0016425') {
+      if(uName == 'JPRQ201902469876' && uPwd == 'jprq0016425') {
         _save();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TabNavigator()));
       }else{
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    '华威缴费',
+                    '巨鹏燃气',
                     style: TextStyle(fontSize: 24, color: Colors.black54),
                   ),
                 ),
