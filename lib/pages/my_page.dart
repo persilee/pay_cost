@@ -253,7 +253,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                               Padding(padding: EdgeInsets.only(right: 10)),
                               Text(
-                                '关于华威缴费',
+                                '关于巨鹏燃气',
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black54,
