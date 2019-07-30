@@ -20,7 +20,7 @@ final List<PayListModel> payList  = [
   PayListModel(
     type: '水费',
     doorNo: '14******425',
-    unit: '丽水市供排水有限责任公司',
+    unit: '金华市净畅自来水有限公司',
     amount: '56.34',
     date: '2019-06-06 12:23:46',
     info: '缴费成功',
@@ -36,7 +36,7 @@ final List<PayListModel> payList  = [
   PayListModel(
     type: '燃气费',
     doorNo: '14******425',
-    unit: '丽水巨鹏燃气有限公司',
+    unit: '浙江省浦江高峰管道燃气有限公司',
     amount: '12.23',
     date: '2019-06-06 12:26:12',
     info: '缴费成功',

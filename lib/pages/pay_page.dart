@@ -1,7 +1,7 @@
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
-import 'package:pay_cost/pages/city_page.dart';
+import 'package:pay_cost/util/toast.dart';
 
 class PayPage extends StatefulWidget {
   @override
@@ -10,6 +10,8 @@ class PayPage extends StatefulWidget {
 
 class _PayPageState extends State<PayPage> {
   final registerFormKey = GlobalKey<FormState>();
+  String _choice = 'Nothing';
+  String _payVal = 'union';
 
   String validatorPwd(value) {
     if (value.isEmpty) {
@@ -29,13 +31,199 @@ class _PayPageState extends State<PayPage> {
     ).show(context);
   }
 
+  Future _openModalBottomSheet() async {
+    final option = await showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+            height: 260.0,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      '请选择支付方式',
+                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.close),
+                      color: Colors.black54,
+                      iconSize: 20,
+                      highlightColor: Colors.white,
+                      splashColor: Colors.grey[100],
+                    ),
+                  ],
+                ),
+                Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Wrap(
+                          spacing: 6,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: <Widget>[
+                            Image(
+                              width: 32,
+                              height: 32,
+                              image: AssetImage('assets/images/unionPay.png'),
+                            ),
+                            Text('银联支付'),
+                          ],
+                        ),
+                        Wrap(
+                          children: <Widget>[
+                            Radio(
+                                value: 'union',
+                                groupValue: _payVal,
+                                activeColor: Theme.of(context).primaryColor,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _payVal = value;
+                                  });
+                                }),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Wrap(
+                          spacing: 6,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: <Widget>[
+                            Image(
+                              width: 32,
+                              height: 32,
+                              image:
+                                  AssetImage('assets/images/wechatPay_off.png'),
+                            ),
+                            Text(
+                              '微信支付',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        Wrap(
+                          children: <Widget>[
+                            Radio(
+                              value: '',
+                              groupValue: null,
+                              onChanged: (value) {
+                                Toast.show(context, "该业务暂未开通");
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Wrap(
+                          spacing: 6,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: <Widget>[
+                            Image(
+                              width: 32,
+                              height: 32,
+                              image: AssetImage('assets/images/aliPay_off.png'),
+                            ),
+                            Text(
+                              '支付宝支付',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        Wrap(
+                          children: <Widget>[
+                            Radio(
+                              value: '',
+                              groupValue: null,
+                              activeColor: Theme.of(context).primaryColor,
+                              onChanged: (value) {
+                                Toast.show(context, "该业务暂未开通");
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                        padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                        child: Text(
+                          '确定支付 ￥58.68',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        onPressed: () {},
+                        splashColor: Colors.grey[200],
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
+
+    switch (option) {
+      case 'A':
+        setState(() {
+          _choice = 'A';
+        });
+        break;
+      case 'B':
+        setState(() {
+          _choice = 'B';
+        });
+        break;
+      case 'C':
+        setState(() {
+          _choice = 'C';
+        });
+        break;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     /*获取传递过来的参数*/
     PayInfoModel _payInfo = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('${_payInfo.type}缴费'),
+        title: Text('${_payInfo.type}账单'),
         elevation: 0.0,
       ),
       body: Container(
@@ -51,7 +239,7 @@ class _PayPageState extends State<PayPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 480,
+                    height: 300,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -66,16 +254,31 @@ class _PayPageState extends State<PayPage> {
                       ],
                     ),
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(26, 30, 26, 30),
+                      padding: EdgeInsets.fromLTRB(26, 15, 26, 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            '水费',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.black54,
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Image(
+                                  width: 20,
+                                  height: 20,
+                                  image:
+                                      AssetImage('assets/images/shuifei.png'),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                ),
+                                Text(
+                                  '水费',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Padding(
@@ -87,7 +290,7 @@ class _PayPageState extends State<PayPage> {
                             padding: EdgeInsets.only(top: 20),
                           ),
                           Container(
-                            height: 100,
+                            height: 72,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,20 +298,20 @@ class _PayPageState extends State<PayPage> {
                                 Text(
                                   '应缴金额',
                                   style: TextStyle(
-                                      fontSize: 20, color: Colors.black87),
+                                      fontSize: 18, color: Colors.black45),
                                 ),
                                 Column(
                                   children: <Widget>[
                                     Text(
-                                      '66.66',
+                                      '58.68',
                                       style: TextStyle(
-                                          fontSize: 46,
+                                          fontSize: 36,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     Text(
                                       '（含违约金 5.6 元）',
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: Colors.black45,
                                       ),
                                     )
@@ -118,7 +321,7 @@ class _PayPageState extends State<PayPage> {
                             ),
                           ),
                           Container(
-                            height: 50,
+                            height: 40,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,18 +329,18 @@ class _PayPageState extends State<PayPage> {
                                 Text(
                                   '缴费单位',
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black45),
+                                      fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
                                   _payInfo.unit,
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black87),
+                                      fontSize: 16, color: Colors.black87),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            height: 50,
+                            height: 40,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,18 +348,18 @@ class _PayPageState extends State<PayPage> {
                                 Text(
                                   '缴费户号',
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black45),
+                                      fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
                                   _payInfo.userId,
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black87),
+                                      fontSize: 16, color: Colors.black87),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            height: 50,
+                            height: 40,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -164,28 +367,12 @@ class _PayPageState extends State<PayPage> {
                                 Text(
                                   '户名',
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black45),
+                                      fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
                                   '**颖',
                                   style: TextStyle(
-                                      fontSize: 18, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Form(
-                            key: registerFormKey,
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: '缴费金额',
-                                    labelStyle: TextStyle(fontSize: 20),
-                                    helperText: '',
-                                  ),
-                                  onSaved: (value) {},
-                                  style: TextStyle(fontSize: 26),
+                                      fontSize: 16, color: Colors.black87),
                                 ),
                               ],
                             ),
@@ -205,14 +392,14 @@ class _PayPageState extends State<PayPage> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
                       child: Text(
                         '缴 费',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
-                      onPressed: () { },
+                      onPressed: _openModalBottomSheet,
                       splashColor: Colors.grey[200],
                       color: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(

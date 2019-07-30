@@ -13,7 +13,7 @@ class _WaterPageState extends State<WaterPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '丽水市';
+  String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
 
@@ -30,29 +30,29 @@ class _WaterPageState extends State<WaterPage> {
       registerFormKey.currentState.save();
       debugPrint('uname: ${_userId}');
 
-      EasyDialog(
-        description: Text(
-          "当前户号暂未查询到账单",
-          textScaleFactor: 1.2,
-          style: TextStyle(fontSize: 14, color: Colors.black54),
-          textAlign: TextAlign.center,
-        ),
-        height: 140,
-      ).show(context);
-
-//      Navigator.of(context).push(
-//        MaterialPageRoute(
-//          builder: (context) => PayPage(),
-//          settings: RouteSettings(
-//            arguments: PayInfoModel(
-//                type: '水费',
-//                city: _selectCity,
-//                project: _payCostUnitController.text,
-//                unit: _paymentProjectController.text,
-//                userId: _userId),
-//          ),
+//      EasyDialog(
+//        description: Text(
+//          "当前户号暂未查询到账单",
+//          textScaleFactor: 1.2,
+//          style: TextStyle(fontSize: 14, color: Colors.black54),
+//          textAlign: TextAlign.center,
 //        ),
-//      );
+//        height: 140,
+//      ).show(context);
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PayPage(),
+          settings: RouteSettings(
+            arguments: PayInfoModel(
+                type: '水费',
+                city: _selectCity,
+                project: _paymentProjectController.text,
+                unit: _payCostUnitController.text,
+                userId: _userId),
+          ),
+        ),
+      );
     } else {
       setState(() {
         _autoValidate = true;
@@ -75,8 +75,8 @@ class _WaterPageState extends State<WaterPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '丽水市水费';
-    _payCostUnitController.text = '丽水市供排水有限责任公司';
+    _paymentProjectController.text = '金华市水费';
+    _payCostUnitController.text = '金华市净畅自来水有限公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -184,13 +184,13 @@ class _WaterPageState extends State<WaterPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '丽水市'
+                                                  ? '金华市'
                                                   : value.name);
-                                              if (_selectCity == '丽水市') {
+                                              if (_selectCity == '金华市') {
                                                 _payCostUnitController.text =
-                                                    '丽水市水费';
+                                                    '金华市水费';
                                                 _paymentProjectController.text =
-                                                    '丽水市供排水有限责任公司';
+                                                    '金华市净畅自来水有限公司';
                                               } else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
                                                     '深圳市水费';

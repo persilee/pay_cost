@@ -14,7 +14,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '丽水市';
+  String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
   bool _visible = true;
@@ -218,7 +218,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                                 '国网浙江省电力公司';
                                               } else if (_selectCity == '深圳市') {
                                                 _visible = false;
-                                                _height = 460;
+                                                _height = 465;
                                                 _payCostUnitController.text =
                                                 '深圳市电费';
                                                 _paymentProjectController.text =

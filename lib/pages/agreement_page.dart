@@ -24,7 +24,7 @@ class _AgreementPageState extends State<AgreementPage> {
               children: <Widget>[
                 Padding(padding: EdgeInsets.fromLTRB(0, 12, 0, 6)),
                 Center(
-                  child: Text('巨鹏燃气APP用户隐私协议', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87,),),
+                  child: Text('净畅缴费APP用户隐私协议', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87,),),
                 ),
                 Padding(padding: EdgeInsets.fromLTRB(0, 12, 0, 2)),
                 Text('    本软件尊重并保护所有使用服务用户的个人隐私权。', style: TextStyle(fontSize: 16, color: Colors.black54),),

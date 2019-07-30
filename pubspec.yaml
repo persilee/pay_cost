@@ -74,6 +74,9 @@ flutter:
     - assets/images/guanyu.png
     - assets/images/banner.png
     - assets/images/appIcon.png
+    - assets/images/unionPay.png
+    - assets/images/aliPay_off.png
+    - assets/images/wechatPay_off.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

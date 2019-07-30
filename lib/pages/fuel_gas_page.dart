@@ -13,7 +13,7 @@ class _FuelGasPageState extends State<FuelGasPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '丽水市';
+  String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
 
@@ -75,8 +75,8 @@ class _FuelGasPageState extends State<FuelGasPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '巨鹏燃气';
-    _payCostUnitController.text = '丽水巨鹏燃气有限公司';
+    _paymentProjectController.text = '金华燃气';
+    _payCostUnitController.text = '浙江省浦江高峰管道燃气有限公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -105,7 +105,7 @@ class _FuelGasPageState extends State<FuelGasPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
                   child: Container(
-                    height: 440,
+                    height: 420,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
@@ -184,13 +184,13 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '巨鹏燃气'
+                                                  ? '金华市'
                                                   : value.name);
-                                              if (_selectCity == '丽水市') {
+                                              if (_selectCity == '金华市') {
                                                 _payCostUnitController.text =
-                                                '巨鹏燃气';
+                                                '金华燃气';
                                                 _paymentProjectController.text =
-                                                '丽水巨鹏燃气有限公司';
+                                                '浙江省浦江高峰管道燃气有限公司';
                                               }else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
                                                     '深圳市燃气费';

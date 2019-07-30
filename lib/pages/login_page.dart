@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    '巨鹏燃气',
+                    '净畅缴费',
                     style: TextStyle(fontSize: 24, color: Colors.black54),
                   ),
                 ),
