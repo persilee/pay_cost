@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         _loading = !_loading;
         autoValidate = true;
       });
-      if(uName == 'JPRQ201902469876' && uPwd == 'jprq0016425') {
+      if(uName == 'JCJF201902369636' && uPwd == 'jcjf0016695') {
         _save();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TabNavigator()));
       }else{

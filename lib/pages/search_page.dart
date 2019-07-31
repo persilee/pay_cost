@@ -9,11 +9,12 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
+bool _visible = false;
+
 class _SearchPageState extends State<SearchPage> {
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String _name = '';
-  bool _visible = false;
 
   Future<Null> _onRefresh() async {
     await Future.delayed(Duration(seconds: 2), () {
@@ -48,7 +49,29 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: Text('缴费记录', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
       ),
-      body: Offstage(
+      body: PayLostContent(),
+    );
+  }
+}
+
+class PayLostContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    if (payList.length == 0) {
+      return Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset('assets/images/record.png', width: 80, height: 80,),
+            Padding(padding: EdgeInsets.only(top: 10),),
+            Text('您还没有缴费记录哦', style: TextStyle(fontSize: 16,color: Colors.grey),),
+          ],
+        ),
+      );
+    }else{
+      return Offstage(
         offstage: !_visible,
         child: CustomScrollView(
           slivers: <Widget>[
@@ -60,8 +83,8 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 }
 

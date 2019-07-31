@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
 import 'package:pay_cost/pages/pay_page.dart';
+import 'package:pay_cost/util/toast.dart';
 
 class WaterPage extends StatefulWidget {
   @override
@@ -18,8 +19,13 @@ class _WaterPageState extends State<WaterPage> {
   String _userId;
 
   String validatorUser(value) {
+    print(value.length);
     if (value.isEmpty) {
       return '用户编号不能为空';
+    }else if (value.length < 8) {
+      return '用户编号长度不能小于8位';
+    }else if (value.length > 10) {
+      return '用户编码长度不能大于10位';
     }
 
     return null;
@@ -40,19 +46,25 @@ class _WaterPageState extends State<WaterPage> {
 //        height: 140,
 //      ).show(context);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => PayPage(),
-          settings: RouteSettings(
-            arguments: PayInfoModel(
-                type: '水费',
-                city: _selectCity,
-                project: _paymentProjectController.text,
-                unit: _payCostUnitController.text,
-                userId: _userId),
+      if(_userId != '00061062') {
+        Toast.show(context, "用户编号不存在");
+      }
+
+      if(_userId == '00061062'){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PayPage(),
+            settings: RouteSettings(
+              arguments: PayInfoModel(
+                  type: '水费',
+                  city: _selectCity,
+                  project: _paymentProjectController.text,
+                  unit: _payCostUnitController.text,
+                  userId: _userId),
+            ),
           ),
-        ),
-      );
+        );
+      }
     } else {
       setState(() {
         _autoValidate = true;
@@ -232,6 +244,8 @@ class _WaterPageState extends State<WaterPage> {
                                 ),
                                 TextFormField(
                                   autofocus: false,
+                                  keyboardType: TextInputType.number,
+                                  maxLength: 10,
                                   decoration: InputDecoration(
                                     labelText: '用户编号',
                                     labelStyle: TextStyle(fontSize: 14),

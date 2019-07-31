@@ -1,7 +1,10 @@
 import 'package:easy_dialog/easy_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
+import 'package:pay_cost/pages/pay_result.dart';
 import 'package:pay_cost/util/toast.dart';
+import '../model/pay_list_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PayPage extends StatefulWidget {
   @override
@@ -10,14 +13,29 @@ class PayPage extends StatefulWidget {
 
 class _PayPageState extends State<PayPage> {
   final registerFormKey = GlobalKey<FormState>();
+  PayInfoModel _payInfo;
   String _choice = 'Nothing';
   String _payVal = 'union';
+  bool _loading = false;
 
   String validatorPwd(value) {
     if (value.isEmpty) {
       return 'pwd is required';
     }
     return null;
+  }
+
+  Future<Null> _onRefresh() async {
+    setState(() {
+      _loading = !_loading;
+    });
+    Navigator.pop(context);
+    await Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _loading = !_loading;
+      });
+      _pay();
+    });
   }
 
   void showAlertDialog(BuildContext context) {
@@ -31,168 +49,213 @@ class _PayPageState extends State<PayPage> {
     ).show(context);
   }
 
+   _pay() {
+
+     var date = new DateTime.now();
+     String timestamp = "${date.year.toString()}-${date.month.toString().padLeft(2,'0')}-${date.day.toString().padLeft(2,'0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+     print(timestamp);
+
+     Navigator.of(context).push(
+       MaterialPageRoute(
+         builder: (context) => PayResult(),
+         settings: RouteSettings(
+           arguments:
+           PayListModel(
+            type: _payInfo.type,
+            doorNo: '00061062',
+            unit: _payInfo.unit,
+            amount: '58.68',
+            date: timestamp,
+            info: '缴费成功',
+          )
+         ),
+       ),
+     );
+//    if(payList.length > 0) {
+//      Toast.show(context, "支付错误");
+//    }else{
+//
+//      payList.add(
+//          PayListModel(
+//            type: _payInfo.type,
+//            doorNo: '00061062',
+//            unit: _payInfo.unit,
+//            amount: '58.68',
+//            date: timestamp,
+//            info: '缴费成功',
+//          )
+//      );
+//    }
+  }
+
   Future _openModalBottomSheet() async {
     final option = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
-            padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
-            height: 260.0,
-            child: Column(
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      '请选择支付方式',
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.close),
-                      color: Colors.black54,
-                      iconSize: 20,
-                      highlightColor: Colors.white,
-                      splashColor: Colors.grey[100],
-                    ),
-                  ],
-                ),
-                Divider(height: 1.0, indent: 0.0, color: Colors.black26),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Wrap(
-                          spacing: 6,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: <Widget>[
-                            Image(
-                              width: 32,
-                              height: 32,
-                              image: AssetImage('assets/images/unionPay.png'),
-                            ),
-                            Text('银联支付'),
-                          ],
-                        ),
-                        Wrap(
-                          children: <Widget>[
-                            Radio(
-                                value: 'union',
-                                groupValue: _payVal,
-                                activeColor: Theme.of(context).primaryColor,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _payVal = value;
-                                  });
-                                }),
-                          ],
-                        ),
-                      ],
-                    ),
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () { return false; },
+            child: Container(
+              padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+              height: 260.0,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        '请选择支付方式',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.close),
+                        color: Colors.black54,
+                        iconSize: 20,
+                        highlightColor: Colors.white,
+                        splashColor: Colors.grey[100],
+                      ),
+                    ],
                   ),
-                ),
-                Divider(height: 1.0, indent: 0.0, color: Colors.black26),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Wrap(
-                          spacing: 6,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: <Widget>[
-                            Image(
-                              width: 32,
-                              height: 32,
-                              image:
-                                  AssetImage('assets/images/wechatPay_off.png'),
-                            ),
-                            Text(
-                              '微信支付',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        Wrap(
-                          children: <Widget>[
-                            Radio(
-                              value: '',
-                              groupValue: null,
-                              onChanged: (value) {
-                                Toast.show(context, "该业务暂未开通");
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(height: 1.0, indent: 0.0, color: Colors.black26),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Wrap(
-                          spacing: 6,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: <Widget>[
-                            Image(
-                              width: 32,
-                              height: 32,
-                              image: AssetImage('assets/images/aliPay_off.png'),
-                            ),
-                            Text(
-                              '支付宝支付',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        Wrap(
-                          children: <Widget>[
-                            Radio(
-                              value: '',
-                              groupValue: null,
-                              activeColor: Theme.of(context).primaryColor,
-                              onChanged: (value) {
-                                Toast.show(context, "该业务暂未开通");
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: RaisedButton(
-                        padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
-                        child: Text(
-                          '确定支付 ￥58.68',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                        onPressed: () {},
-                        splashColor: Colors.grey[200],
-                        color: Theme.of(context).primaryColor,
+                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Wrap(
+                            spacing: 6,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Image(
+                                width: 32,
+                                height: 32,
+                                image: AssetImage('assets/images/unionPay.png'),
+                              ),
+                              Text('银联支付'),
+                            ],
+                          ),
+                          Wrap(
+                            children: <Widget>[
+                              Radio(
+                                  value: 'union',
+                                  groupValue: _payVal,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _payVal = value;
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Wrap(
+                            spacing: 6,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Image(
+                                width: 32,
+                                height: 32,
+                                image:
+                                AssetImage('assets/images/wechatPay_off.png'),
+                              ),
+                              Text(
+                                '微信支付',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            children: <Widget>[
+                              Radio(
+                                value: '',
+                                groupValue: null,
+                                onChanged: (value) {
+                                  Toast.show(context, "该业务暂未开通");
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Wrap(
+                            spacing: 6,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: <Widget>[
+                              Image(
+                                width: 32,
+                                height: 32,
+                                image: AssetImage('assets/images/aliPay_off.png'),
+                              ),
+                              Text(
+                                '支付宝支付',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            children: <Widget>[
+                              Radio(
+                                value: '',
+                                groupValue: null,
+                                activeColor: Theme.of(context).primaryColor,
+                                onChanged: (value) {
+                                  Toast.show(context, "该业务暂未开通");
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: RaisedButton(
+                          padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                          child: Text(
+                            '确定支付 ￥58.68',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          onPressed: () {
+                            _onRefresh();
+                          },
+                          splashColor: Colors.grey[200],
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         });
@@ -217,16 +280,22 @@ class _PayPageState extends State<PayPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    /*获取传递过来的参数*/
-    PayInfoModel _payInfo = ModalRoute.of(context).settings.arguments;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${_payInfo.type}账单'),
-        elevation: 0.0,
-      ),
-      body: Container(
+  Widget _childLayout() {
+    if(_loading) {
+      return Center(
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(),
+              Padding(padding: EdgeInsets.only(top: 16),),
+              Text('正在跳转支付页面...'),
+            ],
+          ),
+        ),
+      );
+    }else{
+      return Container(
         child: Column(
           children: <Widget>[
             Stack(
@@ -234,7 +303,7 @@ class _PayPageState extends State<PayPage> {
                 Container(
                   height: 160,
                   decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
+                  BoxDecoration(color: Theme.of(context).primaryColor),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
@@ -266,7 +335,7 @@ class _PayPageState extends State<PayPage> {
                                   width: 20,
                                   height: 20,
                                   image:
-                                      AssetImage('assets/images/shuifei.png'),
+                                  AssetImage('assets/images/shuifei.png'),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 10),
@@ -370,7 +439,7 @@ class _PayPageState extends State<PayPage> {
                                       fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
-                                  '**颖',
+                                  '**付',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black87),
                                 ),
@@ -411,7 +480,20 @@ class _PayPageState extends State<PayPage> {
             )
           ],
         ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /*获取传递过来的参数*/
+    _payInfo = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${_payInfo.type}账单'),
+        elevation: 0.0,
       ),
+      body: _childLayout(),
     );
   }
 }
