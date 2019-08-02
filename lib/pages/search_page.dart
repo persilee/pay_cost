@@ -14,7 +14,8 @@ bool _visible = false;
 class _SearchPageState extends State<SearchPage> {
 
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  String _name = '';
+  String _name = '',type,unit,date;
+  bool _isPay = false;
 
   Future<Null> _onRefresh() async {
     await Future.delayed(Duration(seconds: 2), () {
@@ -28,7 +29,14 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
     _prefs.then((SharedPreferences prefs) {
       _name = (prefs.getString('name') ?? '');
+      _isPay = (prefs.getBool('isPay') ?? false);
+      type = (prefs.getString('type') ?? '');
+      unit = (prefs.getString('unit') ?? '');
+      date = (prefs.getString('date') ?? '');
+
       print(_name);
+      print(_isPay);
+      print(date);
       if( _name == '' ) {
         Toast.show(context, "您还没有登录！");
         setState(() {
@@ -36,6 +44,18 @@ class _SearchPageState extends State<SearchPage> {
         });
         _onRefresh();
       }else{
+        if(_isPay && payList.length == 0){
+          payList.add(
+              PayListModel(
+                type: type,
+                doorNo: '00061062',
+                unit: unit,
+                amount: '58.68',
+                date: date,
+                info: '缴费成功',
+              )
+          );
+        }
         setState(() {
           _visible = true;
         });

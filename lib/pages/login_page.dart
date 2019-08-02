@@ -12,6 +12,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final _loginKey = GlobalKey<FormState>();
   String uName, uPwd;
+  bool isPay = false;
   bool autoValidate = false;
   bool _loading = false;
 
@@ -66,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     final SharedPreferences prefs = await _prefs;
     prefs.setString('name', uName);
     prefs.setString('pwd', uPwd);
+    prefs.setBool('isPay', isPay);
 
     _prefs.then((SharedPreferences prefs) {
       return (prefs.getString('name') ?? 'null');
@@ -76,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('name', uName);
     prefs.setString('pwd', uPwd);
+    prefs.setBool('isPay', isPay);
   }
 
   Widget _childLayout() {

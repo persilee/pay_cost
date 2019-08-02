@@ -4,6 +4,8 @@ import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
 import 'package:pay_cost/pages/pay_page.dart';
 import 'package:pay_cost/util/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pay_cost/util/toast.dart';
 
 class WaterPage extends StatefulWidget {
   @override
@@ -11,12 +13,15 @@ class WaterPage extends StatefulWidget {
 }
 
 class _WaterPageState extends State<WaterPage> {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
   String _selectCity = '金华市';
+  String _name = '';
   bool _autoValidate = false;
-  String _userId;
+  String _userId = '';
+  bool _isPay = false;
 
   String validatorUser(value) {
     print(value.length);
@@ -34,7 +39,44 @@ class _WaterPageState extends State<WaterPage> {
   void submitRegisterForm() {
     if (registerFormKey.currentState.validate()) {
       registerFormKey.currentState.save();
-      debugPrint('uname: ${_userId}');
+
+      _prefs.then((SharedPreferences prefs) {
+        _isPay = (prefs.getBool('isPay') ?? false);
+        _name = (prefs.getString('name') ?? '');
+        print(_name == '');
+        print(_isPay);
+        if(_userId != '00061062') {
+          Toast.show(context, "用户编号不存在");
+        }
+
+        if(_userId == '00061062' && !_isPay && _name != ''){
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PayPage(),
+              settings: RouteSettings(
+                arguments: PayInfoModel(
+                    type: '水费',
+                    city: _selectCity,
+                    project: _paymentProjectController.text,
+                    unit: _payCostUnitController.text,
+                    userId: _userId),
+              ),
+            ),
+          );
+        }else if(_name == ''){
+          Toast.show(context, "您还没有登录！");
+        } else {
+          EasyDialog(
+            description: Text(
+              "当前户号暂未查询到账单",
+              textScaleFactor: 1.2,
+              style: TextStyle(fontSize: 14, color: Colors.black54),
+              textAlign: TextAlign.center,
+            ),
+            height: 140,
+          ).show(context);
+        }
+      });
 
 //      EasyDialog(
 //        description: Text(
@@ -45,26 +87,6 @@ class _WaterPageState extends State<WaterPage> {
 //        ),
 //        height: 140,
 //      ).show(context);
-
-      if(_userId != '00061062') {
-        Toast.show(context, "用户编号不存在");
-      }
-
-      if(_userId == '00061062'){
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => PayPage(),
-            settings: RouteSettings(
-              arguments: PayInfoModel(
-                  type: '水费',
-                  city: _selectCity,
-                  project: _paymentProjectController.text,
-                  unit: _payCostUnitController.text,
-                  userId: _userId),
-            ),
-          ),
-        );
-      }
     } else {
       setState(() {
         _autoValidate = true;

@@ -5,6 +5,10 @@ import 'package:pay_cost/pages/pay_result.dart';
 import 'package:pay_cost/util/toast.dart';
 import '../model/pay_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:pay_cost/model/pay_qr_model.dart';
+import 'dart:convert';
 
 class PayPage extends StatefulWidget {
   @override
@@ -12,11 +16,14 @@ class PayPage extends StatefulWidget {
 }
 
 class _PayPageState extends State<PayPage> {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final registerFormKey = GlobalKey<FormState>();
   PayInfoModel _payInfo;
   String _choice = 'Nothing';
   String _payVal = 'union';
   bool _loading = false;
+  bool _isPay = false;
+  var url = "https://www.googleapis.com/books/v1/volumes?q={http}";
 
   String validatorPwd(value) {
     if (value.isEmpty) {
@@ -30,12 +37,7 @@ class _PayPageState extends State<PayPage> {
       _loading = !_loading;
     });
     Navigator.pop(context);
-    await Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _loading = !_loading;
-      });
-      _pay();
-    });
+    _pay();
   }
 
   void showAlertDialog(BuildContext context) {
@@ -49,32 +51,34 @@ class _PayPageState extends State<PayPage> {
     ).show(context);
   }
 
-   _pay() {
+   _pay() async {
 
      var date = new DateTime.now();
      String timestamp = "${date.year.toString()}-${date.month.toString().padLeft(2,'0')}-${date.day.toString().padLeft(2,'0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
      print(timestamp);
 
-     Navigator.of(context).push(
-       MaterialPageRoute(
-         builder: (context) => PayResult(),
-         settings: RouteSettings(
-           arguments:
-           PayListModel(
-            type: _payInfo.type,
-            doorNo: '00061062',
-            unit: _payInfo.unit,
-            amount: '58.68',
-            date: timestamp,
-            info: '缴费成功',
-          )
-         ),
-       ),
-     );
-//    if(payList.length > 0) {
-//      Toast.show(context, "支付错误");
-//    }else{
-//
+//     Navigator.of(context).push(
+//       MaterialPageRoute(
+//         builder: (context) => PayResult(),
+//         settings: RouteSettings(
+//           arguments:
+//           PayListModel(
+//            type: _payInfo.type,
+//            doorNo: '00061062',
+//            unit: _payInfo.unit,
+//            amount: '58.68',
+//            date: timestamp,
+//            info: '缴费成功',
+//          )
+//         ),
+//       ),
+//     );
+    if(payList.length > 0) {
+      setState(() {
+        _loading = !_loading;
+      });
+      Toast.show(context, "支付错误");
+    }else{
 //      payList.add(
 //          PayListModel(
 //            type: _payInfo.type,
@@ -85,7 +89,36 @@ class _PayPageState extends State<PayPage> {
 //            info: '缴费成功',
 //          )
 //      );
-//    }
+      _setPay(timestamp);
+      var params = Map<String, String>();
+      params["merchId"] = "15811813135";
+      params["amount"] = "58.68";
+      params["scanCodeType"] = "12";
+      params["version"] = "1.2";
+      var url = 'http://api.worepay.com/app/scanpay/unionQrpay.do?merchId=15811813135&amount=1&scanCodeType=12&version=1.2';
+      var response = await http.post(url);
+
+      Map<String, dynamic> jsonMap = json.decode(response.body);
+
+      QrModel qr = QrModel.fromJson(jsonMap);
+      print('country name is:${qr.data.qrCode}');
+
+      setState(() {
+        _loading = !_loading;
+      });
+
+      launch(qr.data.qrCode);
+      
+    }
+  }
+
+
+  Future<void> _setPay(String timestamp) async {
+    final SharedPreferences prefs = await _prefs;
+//    prefs.setBool('isPay', true);
+    prefs.setString('type', _payInfo.type);
+    prefs.setString('unit', _payInfo.unit);
+    prefs.setString('date', timestamp);
   }
 
   Future _openModalBottomSheet() async {
@@ -97,7 +130,7 @@ class _PayPageState extends State<PayPage> {
             onTap: () { return false; },
             child: Container(
               padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
-              height: 260.0,
+              height: 200.0,
               child: Column(
                 children: <Widget>[
                   Row(
@@ -157,84 +190,84 @@ class _PayPageState extends State<PayPage> {
                       ),
                     ),
                   ),
-                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Wrap(
-                            spacing: 6,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              Image(
-                                width: 32,
-                                height: 32,
-                                image:
-                                AssetImage('assets/images/wechatPay_off.png'),
-                              ),
-                              Text(
-                                '微信支付',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            children: <Widget>[
-                              Radio(
-                                value: '',
-                                groupValue: null,
-                                onChanged: (value) {
-                                  Toast.show(context, "该业务暂未开通");
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Wrap(
-                            spacing: 6,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              Image(
-                                width: 32,
-                                height: 32,
-                                image: AssetImage('assets/images/aliPay_off.png'),
-                              ),
-                              Text(
-                                '支付宝支付',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                          Wrap(
-                            children: <Widget>[
-                              Radio(
-                                value: '',
-                                groupValue: null,
-                                activeColor: Theme.of(context).primaryColor,
-                                onChanged: (value) {
-                                  Toast.show(context, "该业务暂未开通");
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+//                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+//                  Expanded(
+//                    child: GestureDetector(
+//                      onTap: () {},
+//                      child: Row(
+//                        crossAxisAlignment: CrossAxisAlignment.center,
+//                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                        children: <Widget>[
+//                          Wrap(
+//                            spacing: 6,
+//                            crossAxisAlignment: WrapCrossAlignment.center,
+//                            children: <Widget>[
+//                              Image(
+//                                width: 32,
+//                                height: 32,
+//                                image:
+//                                AssetImage('assets/images/wechatPay_off.png'),
+//                              ),
+//                              Text(
+//                                '微信支付',
+//                                style: TextStyle(color: Colors.grey),
+//                              ),
+//                            ],
+//                          ),
+//                          Wrap(
+//                            children: <Widget>[
+//                              Radio(
+//                                value: '',
+//                                groupValue: null,
+//                                onChanged: (value) {
+//                                  Toast.show(context, "该业务暂未开通");
+//                                },
+//                              ),
+//                            ],
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
+//                  Divider(height: 1.0, indent: 0.0, color: Colors.black26),
+//                  Expanded(
+//                    child: GestureDetector(
+//                      onTap: () {},
+//                      child: Row(
+//                        crossAxisAlignment: CrossAxisAlignment.center,
+//                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                        children: <Widget>[
+//                          Wrap(
+//                            spacing: 6,
+//                            crossAxisAlignment: WrapCrossAlignment.center,
+//                            children: <Widget>[
+//                              Image(
+//                                width: 32,
+//                                height: 32,
+//                                image: AssetImage('assets/images/aliPay_off.png'),
+//                              ),
+//                              Text(
+//                                '支付宝支付',
+//                                style: TextStyle(color: Colors.grey),
+//                              ),
+//                            ],
+//                          ),
+//                          Wrap(
+//                            children: <Widget>[
+//                              Radio(
+//                                value: '',
+//                                groupValue: null,
+//                                activeColor: Theme.of(context).primaryColor,
+//                                onChanged: (value) {
+//                                  Toast.show(context, "该业务暂未开通");
+//                                },
+//                              ),
+//                            ],
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
