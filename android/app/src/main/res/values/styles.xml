@@ -5,5 +5,5 @@
              Flutter draws its first frame -->
         <item name="android:windowBackground">@color/ic_launcher_background</item>
     </style>
-    <string name="app_name">净畅缴费</string>
+    <string name="app_name">华威燃气</string>
 </resources>

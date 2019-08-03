@@ -25,6 +25,31 @@ class _PayPageState extends State<PayPage> {
   bool _isPay = false;
   var url = "https://www.googleapis.com/books/v1/volumes?q={http}";
 
+  Widget _iconStr(_payInfo) {
+    if(_payInfo.type == '水费'){
+      return Image(
+        width: 20,
+        height: 20,
+        image:
+        AssetImage('assets/images/shuifei.png'),
+      );
+    }else if(_payInfo.type == '燃气费'){
+      return Image(
+        width: 20,
+        height: 20,
+        image:
+        AssetImage('assets/images/ranqifei.png'),
+      );
+    }else if(_payInfo.type == '电费'){
+      return Image(
+        width: 20,
+        height: 20,
+        image:
+        AssetImage('assets/images/dianfei.png'),
+      );
+    }
+  }
+
   String validatorPwd(value) {
     if (value.isEmpty) {
       return 'pwd is required';
@@ -313,7 +338,7 @@ class _PayPageState extends State<PayPage> {
     }
   }
 
-  Widget _childLayout() {
+  Widget _childLayout(_payInfo) {
     if(_loading) {
       return Center(
         child: Container(
@@ -364,17 +389,12 @@ class _PayPageState extends State<PayPage> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Image(
-                                  width: 20,
-                                  height: 20,
-                                  image:
-                                  AssetImage('assets/images/shuifei.png'),
-                                ),
+                                _iconStr(_payInfo),
                                 Padding(
                                   padding: EdgeInsets.only(right: 10),
                                 ),
                                 Text(
-                                  '水费',
+                                  _payInfo.type,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -526,7 +546,7 @@ class _PayPageState extends State<PayPage> {
         title: Text('${_payInfo.type}账单'),
         elevation: 0.0,
       ),
-      body: _childLayout(),
+      body: _childLayout(_payInfo),
     );
   }
 }

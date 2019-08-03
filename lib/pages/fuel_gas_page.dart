@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/pages/city_page.dart';
 import 'package:pay_cost/pages/pay_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pay_cost/util/toast.dart';
 
 class FuelGasPage extends StatefulWidget {
   @override
@@ -10,16 +12,23 @@ class FuelGasPage extends StatefulWidget {
 }
 
 class _FuelGasPageState extends State<FuelGasPage> {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
   String _selectCity = '金华市';
   bool _autoValidate = false;
   String _userId;
+  bool _isPay = false;
+  String _name = '';
 
   String validatorUser(value) {
     if (value.isEmpty) {
       return '用户编号不能为空';
+    }else if (value.length < 8) {
+      return '用户编号长度不能小于8位';
+    }else if (value.length > 10) {
+      return '用户编码长度不能大于10位';
     }
 
     return null;
@@ -30,15 +39,53 @@ class _FuelGasPageState extends State<FuelGasPage> {
       registerFormKey.currentState.save();
       debugPrint('uname: ${_userId}');
 
-      EasyDialog(
-        description: Text(
-          "当前户号暂未查询到账单",
-          textScaleFactor: 1.2,
-          style: TextStyle(fontSize: 14, color: Colors.black54),
-          textAlign: TextAlign.center,
-        ),
-        height: 140,
-      ).show(context);
+      _prefs.then((SharedPreferences prefs) {
+        _isPay = (prefs.getBool('isPay') ?? false);
+        _name = (prefs.getString('name') ?? '');
+        print(_name == '');
+        print(_isPay);
+        if(_userId != '00061062') {
+          Toast.show(context, "用户编号不存在");
+        }
+
+        if(_userId == '00061062' && !_isPay && _name != ''){
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PayPage(),
+              settings: RouteSettings(
+                arguments: PayInfoModel(
+                    type: '燃气费',
+                    city: _selectCity,
+                    project: _paymentProjectController.text,
+                    unit: _payCostUnitController.text,
+                    userId: _userId),
+              ),
+            ),
+          );
+        }else if(_name == ''){
+          Toast.show(context, "您还没有登录！");
+        } else {
+          EasyDialog(
+            description: Text(
+              "当前户号暂未查询到账单",
+              textScaleFactor: 1.2,
+              style: TextStyle(fontSize: 14, color: Colors.black54),
+              textAlign: TextAlign.center,
+            ),
+            height: 140,
+          ).show(context);
+        }
+      });
+
+//      EasyDialog(
+//        description: Text(
+//          "当前户号暂未查询到账单",
+//          textScaleFactor: 1.2,
+//          style: TextStyle(fontSize: 14, color: Colors.black54),
+//          textAlign: TextAlign.center,
+//        ),
+//        height: 140,
+//      ).show(context);
 
 //      Navigator.of(context).push(
 //        MaterialPageRoute(
@@ -75,8 +122,8 @@ class _FuelGasPageState extends State<FuelGasPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '金华燃气';
-    _payCostUnitController.text = '浙江省浦江高峰管道燃气有限公司';
+    _paymentProjectController.text = '华威燃气';
+    _payCostUnitController.text = '金华市华威燃气有限公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -188,14 +235,14 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                                   : value.name);
                                               if (_selectCity == '金华市') {
                                                 _payCostUnitController.text =
-                                                '金华燃气';
+                                                '金华市华威燃气有限公司';
                                                 _paymentProjectController.text =
-                                                '浙江省浦江高峰管道燃气有限公司';
+                                                '华威燃气';
                                               }else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
-                                                    '深圳市燃气费';
-                                                _paymentProjectController.text =
                                                     '深圳燃气集团股份有限公司';
+                                                _paymentProjectController.text =
+                                                    '深圳市燃气费';
                                               } else {
                                                 _payCostUnitController.text =
                                                     '';
@@ -232,6 +279,8 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                 ),
                                 TextFormField(
                                   autofocus: false,
+                                  keyboardType: TextInputType.number,
+                                  maxLength: 10,
                                   decoration: InputDecoration(
                                     labelText: '用户编号',
                                     labelStyle: TextStyle(fontSize: 16),

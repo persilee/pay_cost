@@ -35,7 +35,7 @@ class _AboutPageState extends State<AboutPage> {
                     padding: EdgeInsets.only(top: 10),
                   ),
                   Text(
-                    '净畅缴费V1.0.3',
+                    '华威燃气V1.0.4',
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 16,

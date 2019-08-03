@@ -155,6 +155,38 @@ class _HomePageState extends State<HomePage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      FuelGasPage()));
+                                        },
+                                        child: Column(
+                                          children: <Widget>[
+                                            Image(
+                                              width: 36,
+                                              height: 36,
+                                              image: AssetImage(
+                                                  'assets/images/ranqifei.png'),
+                                            ),
+                                            Padding(
+                                                padding:
+                                                EdgeInsets.only(top: 6)),
+                                            Text(
+                                              '燃气费',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black54,
+                                                letterSpacing: 2,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     WaterPage()),
@@ -173,38 +205,6 @@ class _HomePageState extends State<HomePage> {
                                                 EdgeInsets.only(top: 6)),
                                             Text(
                                               '水费',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black54,
-                                                letterSpacing: 2,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      FuelGasPage()));
-                                        },
-                                        child: Column(
-                                          children: <Widget>[
-                                            Image(
-                                              width: 36,
-                                              height: 36,
-                                              image: AssetImage(
-                                                  'assets/images/ranqifei.png'),
-                                            ),
-                                            Padding(
-                                                padding:
-                                                EdgeInsets.only(top: 6)),
-                                            Text(
-                                              '燃气费',
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 color: Colors.black54,
@@ -325,6 +325,38 @@ class _HomePageState extends State<HomePage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      FuelGasPage()));
+                                        },
+                                        child: Column(
+                                          children: <Widget>[
+                                            Image(
+                                              width: 36,
+                                              height: 36,
+                                              image: AssetImage(
+                                                  'assets/images/ranqifei.png'),
+                                            ),
+                                            Padding(
+                                                padding:
+                                                EdgeInsets.only(top: 6)),
+                                            Text(
+                                              '燃气费',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black54,
+                                                letterSpacing: 2,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     WaterPage()),
@@ -343,38 +375,6 @@ class _HomePageState extends State<HomePage> {
                                                 EdgeInsets.only(top: 6)),
                                             Text(
                                               '水费',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black54,
-                                                letterSpacing: 2,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      FuelGasPage()));
-                                        },
-                                        child: Column(
-                                          children: <Widget>[
-                                            Image(
-                                              width: 36,
-                                              height: 36,
-                                              image: AssetImage(
-                                                  'assets/images/ranqifei.png'),
-                                            ),
-                                            Padding(
-                                                padding:
-                                                EdgeInsets.only(top: 6)),
-                                            Text(
-                                              '燃气费',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black54,
