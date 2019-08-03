@@ -24,6 +24,24 @@ class _PayResultState extends State<PayResult> {
     ).show(context);
   }
 
+  Widget _iconStr(_payInfo) {
+    if(_payInfo.info == '缴费成功'){
+      return Image(
+        width: 26,
+        height: 26,
+        image:
+        AssetImage('assets/images/isuccess.png'),
+      );
+    }else if(_payInfo.info == '缴费失败'){
+      return Image(
+        width: 26,
+        height: 26,
+        image:
+        AssetImage('assets/images/failure.png'),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     /*获取传递过来的参数*/
@@ -49,17 +67,12 @@ class _PayResultState extends State<PayResult> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Image(
-                          width: 26,
-                          height: 26,
-                          image:
-                          AssetImage('assets/images/failure.png'),
-                        ),
+                        _iconStr(_payInfo),
                         Padding(
                           padding: EdgeInsets.only(right: 10),
                         ),
                         Text(
-                          '支付失败',
+                          _payInfo.info == '缴费成功' ? '支付成功' :'支付失败',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -108,7 +121,7 @@ class _PayResultState extends State<PayResult> {
                                       fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
-                                  '—',
+                                    _payInfo.info == '缴费成功' ? _payInfo.date :'—',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),
@@ -129,7 +142,7 @@ class _PayResultState extends State<PayResult> {
                                       fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
-                                  '—',
+                                  _payInfo.info == '缴费成功' ? '银联支付' :'—',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),
@@ -150,7 +163,7 @@ class _PayResultState extends State<PayResult> {
                                       fontSize: 16, color: Colors.black45),
                                 ),
                                 Text(
-                                  '—',
+                                  _payInfo.info == '缴费成功' ? _payInfo.amount :'—',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),

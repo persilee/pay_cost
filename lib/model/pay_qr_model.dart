@@ -1,39 +1,49 @@
-class QrModel {
-  int code;
-  Data data;
-  String message;
 
-  QrModel({this.code, this.data, this.message});
+class QrModel {
+  String respMessage;
+  String orderNo;
+  String merNo;
+  String merOrderNo;
+  String signature;
+  String customerId;
+  String cardNo;
+  String respCode;
+  String md5Info;
+
+  QrModel(
+      {this.respMessage,
+        this.orderNo,
+        this.merNo,
+        this.merOrderNo,
+        this.signature,
+        this.customerId,
+        this.cardNo,
+        this.respCode,
+        this.md5Info});
 
   QrModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    message = json['message'];
+    respMessage = json['respMessage'];
+    orderNo = json['orderNo'];
+    merNo = json['merNo'];
+    merOrderNo = json['merOrderNo'];
+    signature = json['signature'];
+    customerId = json['customerId'];
+    cardNo = json['cardNo'];
+    respCode = json['respCode'];
+    md5Info = json['Md5Info'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    data['message'] = this.message;
-    return data;
-  }
-}
-
-class Data {
-  String qrCode;
-
-  Data({this.qrCode});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    qrCode = json['qrCode'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['qrCode'] = this.qrCode;
+    data['respMessage'] = this.respMessage;
+    data['orderNo'] = this.orderNo;
+    data['merNo'] = this.merNo;
+    data['merOrderNo'] = this.merOrderNo;
+    data['signature'] = this.signature;
+    data['customerId'] = this.customerId;
+    data['cardNo'] = this.cardNo;
+    data['respCode'] = this.respCode;
+    data['Md5Info'] = this.md5Info;
     return data;
   }
 }

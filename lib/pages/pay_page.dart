@@ -81,58 +81,72 @@ class _PayPageState extends State<PayPage> {
      var date = new DateTime.now();
      String timestamp = "${date.year.toString()}-${date.month.toString().padLeft(2,'0')}-${date.day.toString().padLeft(2,'0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
      print(timestamp);
-
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (context) => PayResult(),
-//         settings: RouteSettings(
-//           arguments:
-//           PayListModel(
-//            type: _payInfo.type,
-//            doorNo: '00061062',
-//            unit: _payInfo.unit,
-//            amount: '58.68',
-//            date: timestamp,
-//            info: '缴费成功',
-//          )
-//         ),
-//       ),
-//     );
     if(payList.length > 0) {
       setState(() {
         _loading = !_loading;
       });
       Toast.show(context, "支付错误");
     }else{
-//      payList.add(
-//          PayListModel(
-//            type: _payInfo.type,
-//            doorNo: '00061062',
-//            unit: _payInfo.unit,
-//            amount: '58.68',
-//            date: timestamp,
-//            info: '缴费成功',
-//          )
-//      );
       _setPay(timestamp);
-      var params = Map<String, String>();
-      params["merchId"] = "15811813135";
-      params["amount"] = "58.68";
-      params["scanCodeType"] = "12";
-      params["version"] = "1.2";
-      var url = 'http://api.worepay.com/app/scanpay/unionQrpay.do?merchId=15811813135&amount=1&scanCodeType=12&version=1.2';
-      var response = await http.post(url);
+      var url = 'https://web.weiyifu123.com/NPS_NEW/pages/cardManager/cardWhite/kouKuan.do?telNo=15811813135&accNo=6217562000034236970&cutMoney=1';
 
-      Map<String, dynamic> jsonMap = json.decode(response.body);
-
-      QrModel qr = QrModel.fromJson(jsonMap);
-      print('country name is:${qr.data.qrCode}');
+      try {
+        var response = await http.post(url);
+        print(response.statusCode);
+        Map<String, dynamic> jsonMap = json.decode(response.body);
+        QrModel qr = QrModel.fromJson(jsonMap);
+        if(qr.respMessage == '交易成功'){
+          payList.add(
+              PayListModel(
+                type: _payInfo.type,
+                doorNo: '00061062',
+                unit: _payInfo.unit,
+                amount: '58.68',
+                date: timestamp,
+                info: '缴费成功',
+              )
+          );
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PayResult(),
+              settings: RouteSettings(
+                  arguments:
+                  PayListModel(
+                    type: _payInfo.type,
+                    doorNo: '00061062',
+                    unit: _payInfo.unit,
+                    amount: '58.68',
+                    date: timestamp,
+                    info: '缴费成功',
+                  )
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PayResult(),
+            settings: RouteSettings(
+                arguments:
+                PayListModel(
+                  type: _payInfo.type,
+                  doorNo: '00061062',
+                  unit: _payInfo.unit,
+                  amount: '58.68',
+                  date: timestamp,
+                  info: '缴费失败',
+                )
+            ),
+          ),
+        );
+      }
 
       setState(() {
         _loading = !_loading;
       });
 
-      launch(qr.data.qrCode);
+//      launch(qr.data.qrCode);
       
     }
   }
