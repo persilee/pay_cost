@@ -23,6 +23,7 @@ class _PayPageState extends State<PayPage> {
   String _payVal = 'union';
   bool _loading = false;
   bool _isPay = false;
+  String _amount = '';
   var url = "https://www.googleapis.com/books/v1/volumes?q={http}";
 
   Widget _iconStr(_payInfo) {
@@ -47,6 +48,19 @@ class _PayPageState extends State<PayPage> {
         image:
         AssetImage('assets/images/dianfei.png'),
       );
+    }
+  }
+
+  String _amountStr(_payInfo) {
+    switch(_payInfo.type){
+      case '水费':
+        return _amount = '58.68';
+        break;
+      case '燃气费':
+        return _amount = '26.35';
+        break;
+      default:
+        break;
     }
   }
 
@@ -88,7 +102,7 @@ class _PayPageState extends State<PayPage> {
       Toast.show(context, "支付错误");
     }else{
       _setPay(timestamp);
-      var url = 'https://web.weiyifu123.com/NPS_NEW/pages/cardManager/cardWhite/kouKuan.do?telNo=15811813135&accNo=6217562000034236970&cutMoney=1';
+      var url = 'https://web.weiyifu123.com/NPS_NEW/pages/cardManager/cardWhite/kouKuan.do?telNo=15811813135&accNo=6217562000034236971&cutMoney=1';
 
       try {
         var response = await http.post(url);
@@ -101,7 +115,7 @@ class _PayPageState extends State<PayPage> {
                 type: _payInfo.type,
                 doorNo: '00061062',
                 unit: _payInfo.unit,
-                amount: '58.68',
+                amount: _amount,
                 date: timestamp,
                 info: '缴费成功',
               )
@@ -115,7 +129,7 @@ class _PayPageState extends State<PayPage> {
                     type: _payInfo.type,
                     doorNo: '00061062',
                     unit: _payInfo.unit,
-                    amount: '58.68',
+                    amount: _amount,
                     date: timestamp,
                     info: '缴费成功',
                   )
@@ -331,25 +345,6 @@ class _PayPageState extends State<PayPage> {
             ),
           );
         });
-
-    switch (option) {
-      case 'A':
-        setState(() {
-          _choice = 'A';
-        });
-        break;
-      case 'B':
-        setState(() {
-          _choice = 'B';
-        });
-        break;
-      case 'C':
-        setState(() {
-          _choice = 'C';
-        });
-        break;
-      default:
-    }
   }
 
   Widget _childLayout(_payInfo) {
@@ -439,13 +434,13 @@ class _PayPageState extends State<PayPage> {
                                 Column(
                                   children: <Widget>[
                                     Text(
-                                      '58.68',
+                                      _amountStr(_payInfo),
                                       style: TextStyle(
                                           fontSize: 36,
                                           fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                      '（含违约金 5.6 元）',
+                                      '（含违约金 ${(double.parse(_amountStr(_payInfo)) * 0.08).toStringAsFixed(2).toString()} 元）',
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.black45,
@@ -560,7 +555,11 @@ class _PayPageState extends State<PayPage> {
         title: Text('${_payInfo.type}账单'),
         elevation: 0.0,
       ),
-      body: _childLayout(_payInfo),
+      body: ListView(
+        children: <Widget>[
+          _childLayout(_payInfo),
+        ],
+      ),
     );
   }
 }
