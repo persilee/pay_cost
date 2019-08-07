@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pay_cost/model/pay_info_model.dart';
 import 'package:pay_cost/util/toast.dart';
 import '../model/pay_list_model.dart';
+import 'package:pay_cost/navigator/tab_navigater.dart';
 
 class PayResult extends StatefulWidget {
   @override
@@ -39,6 +40,18 @@ class _PayResultState extends State<PayResult> {
         image:
         AssetImage('assets/images/failure.png'),
       );
+    }
+  }
+
+  void _backHome() {
+    if(_payInfo.info == '缴费成功'){
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) =>
+                TabNavigator()),
+      );
+    }else if(_payInfo.info == '缴费失败'){
+      Navigator.pop(context);
     }
   }
 
@@ -195,7 +208,7 @@ class _PayResultState extends State<PayResult> {
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                           onPressed: () {
-                            Navigator.pop(context);
+                            _backHome();
                           },
                           splashColor: Colors.grey[200],
                           color: Theme.of(context).primaryColor,

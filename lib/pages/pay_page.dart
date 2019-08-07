@@ -27,32 +27,29 @@ class _PayPageState extends State<PayPage> {
   var url = "https://www.googleapis.com/books/v1/volumes?q={http}";
 
   Widget _iconStr(_payInfo) {
-    if(_payInfo.type == '水费'){
+    if (_payInfo.type == '水费') {
       return Image(
         width: 20,
         height: 20,
-        image:
-        AssetImage('assets/images/shuifei.png'),
+        image: AssetImage('assets/images/shuifei.png'),
       );
-    }else if(_payInfo.type == '燃气费'){
+    } else if (_payInfo.type == '燃气费') {
       return Image(
         width: 20,
         height: 20,
-        image:
-        AssetImage('assets/images/ranqifei.png'),
+        image: AssetImage('assets/images/ranqifei.png'),
       );
-    }else if(_payInfo.type == '电费'){
+    } else if (_payInfo.type == '电费') {
       return Image(
         width: 20,
         height: 20,
-        image:
-        AssetImage('assets/images/dianfei.png'),
+        image: AssetImage('assets/images/dianfei.png'),
       );
     }
   }
 
   String _amountStr(_payInfo) {
-    switch(_payInfo.type){
+    switch (_payInfo.type) {
       case '水费':
         return _amount = '58.68';
         break;
@@ -90,50 +87,47 @@ class _PayPageState extends State<PayPage> {
     ).show(context);
   }
 
-   _pay() async {
-
-     var date = new DateTime.now();
-     String timestamp = "${date.year.toString()}-${date.month.toString().padLeft(2,'0')}-${date.day.toString().padLeft(2,'0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
-     print(timestamp);
-    if(payList.length > 0) {
+  _pay() async {
+    var date = new DateTime.now();
+    String timestamp =
+        "${date.year.toString()}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+    print(timestamp);
+    if (payList.length > 0) {
       setState(() {
         _loading = !_loading;
       });
       Toast.show(context, "支付错误");
-    }else{
-      _setPay(timestamp);
-      var url = 'https://web.weiyifu123.com/NPS_NEW/pages/cardManager/cardWhite/kouKuan.do?telNo=15811813135&accNo=6217562000034236971&cutMoney=1';
+    } else {
+      var url =
+          'https://web.weiyifu123.com/NPS_NEW/pages/cardManager/cardWhite/kouKuan.do?telNo=15811813135&accNo=6217562000034236970&cutMoney=1';
 
       try {
         var response = await http.post(url);
         print(response.statusCode);
         Map<String, dynamic> jsonMap = json.decode(response.body);
         QrModel qr = QrModel.fromJson(jsonMap);
-        if(qr.respMessage == '交易成功'){
-          payList.add(
-              PayListModel(
+        if (qr.respMessage == '交易成功') {
+          _setPay(timestamp);
+          payList.add(PayListModel(
+            type: _payInfo.type,
+            doorNo: '00061062',
+            unit: _payInfo.unit,
+            amount: _amount,
+            date: timestamp,
+            info: '缴费成功',
+          ));
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PayResult(),
+              settings: RouteSettings(
+                  arguments: PayListModel(
                 type: _payInfo.type,
                 doorNo: '00061062',
                 unit: _payInfo.unit,
                 amount: _amount,
                 date: timestamp,
                 info: '缴费成功',
-              )
-          );
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PayResult(),
-              settings: RouteSettings(
-                  arguments:
-                  PayListModel(
-                    type: _payInfo.type,
-                    doorNo: '00061062',
-                    unit: _payInfo.unit,
-                    amount: _amount,
-                    date: timestamp,
-                    info: '缴费成功',
-                  )
-              ),
+              )),
             ),
           );
         }
@@ -142,16 +136,14 @@ class _PayPageState extends State<PayPage> {
           MaterialPageRoute(
             builder: (context) => PayResult(),
             settings: RouteSettings(
-                arguments:
-                PayListModel(
-                  type: _payInfo.type,
-                  doorNo: '00061062',
-                  unit: _payInfo.unit,
-                  amount: '58.68',
-                  date: timestamp,
-                  info: '缴费失败',
-                )
-            ),
+                arguments: PayListModel(
+              type: _payInfo.type,
+              doorNo: '00061062',
+              unit: _payInfo.unit,
+              amount: '58.68',
+              date: timestamp,
+              info: '缴费失败',
+            )),
           ),
         );
       }
@@ -161,14 +153,13 @@ class _PayPageState extends State<PayPage> {
       });
 
 //      launch(qr.data.qrCode);
-      
+
     }
   }
 
-
   Future<void> _setPay(String timestamp) async {
     final SharedPreferences prefs = await _prefs;
-//    prefs.setBool('isPay', true);
+    prefs.setBool('isPay', true);
     prefs.setString('type', _payInfo.type);
     prefs.setString('unit', _payInfo.unit);
     prefs.setString('date', timestamp);
@@ -180,7 +171,9 @@ class _PayPageState extends State<PayPage> {
         builder: (BuildContext context) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () { return false; },
+            onTap: () {
+              return false;
+            },
             child: Container(
               padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
               height: 200.0,
@@ -328,7 +321,7 @@ class _PayPageState extends State<PayPage> {
                         child: RaisedButton(
                           padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
                           child: Text(
-                            '确定支付 ￥58.68',
+                            '确定支付 ￥${_amount}',
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                           onPressed: () {
@@ -348,200 +341,214 @@ class _PayPageState extends State<PayPage> {
   }
 
   Widget _childLayout(_payInfo) {
-    if(_loading) {
+    if (_loading) {
       return Center(
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               CircularProgressIndicator(),
-              Padding(padding: EdgeInsets.only(top: 16),),
-              Text('正在跳转支付页面...'),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+              ),
+              Text('正在支付...'),
             ],
           ),
         ),
       );
-    }else{
-      return Container(
-        child: Column(
-          children: <Widget>[
-            Stack(
+    } else {
+      return ListView(
+        children: <Widget>[
+          Container(
+            child: Column(
               children: <Widget>[
-                Container(
-                  height: 160,
-                  decoration:
-                  BoxDecoration(color: Theme.of(context).primaryColor),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
-                  child: Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10,
-                          offset: Offset.zero,
-                        ),
-                      ],
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      height: 160,
+                      decoration:
+                          BoxDecoration(color: Theme.of(context).primaryColor),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(26, 15, 26, 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                _iconStr(_payInfo),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                ),
-                                Text(
-                                  _payInfo.type,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 60, 20, 20),
+                      child: Container(
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10,
+                              offset: Offset.zero,
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 15),
-                          ),
-                          Divider(
-                              height: 1.0, indent: 0.0, color: Colors.black26),
-                          Padding(
-                            padding: EdgeInsets.only(top: 20),
-                          ),
-                          Container(
-                            height: 72,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  '应缴金额',
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.black45),
-                                ),
-                                Column(
+                          ],
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(26, 15, 26, 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(
-                                      _amountStr(_payInfo),
-                                      style: TextStyle(
-                                          fontSize: 36,
-                                          fontWeight: FontWeight.w400),
+                                    _iconStr(_payInfo),
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
                                     ),
                                     Text(
-                                      '（含违约金 ${(double.parse(_amountStr(_payInfo)) * 0.08).toStringAsFixed(2).toString()} 元）',
+                                      _payInfo.type,
                                       style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black45,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 15),
+                              ),
+                              Divider(
+                                  height: 1.0,
+                                  indent: 0.0,
+                                  color: Colors.black26),
+                              Padding(
+                                padding: EdgeInsets.only(top: 20),
+                              ),
+                              Container(
+                                height: 72,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      '应缴金额',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.black45),
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        Text(
+                                          _amountStr(_payInfo),
+                                          style: TextStyle(
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          '（含违约金 ${(double.parse(_amountStr(_payInfo)) * 0.08).toStringAsFixed(2).toString()} 元）',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black45,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      '缴费单位',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black45),
+                                    ),
+                                    Text(
+                                      _payInfo.unit,
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black87),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      '缴费户号',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black45),
+                                    ),
+                                    Text(
+                                      _payInfo.userId,
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black87),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 40,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      '户名',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black45),
+                                    ),
+                                    Text(
+                                      '**付',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black87),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          Container(
-                            height: 40,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  '缴费单位',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black45),
-                                ),
-                                Text(
-                                  _payInfo.unit,
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 40,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  '缴费户号',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black45),
-                                ),
-                                Text(
-                                  _payInfo.userId,
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 40,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  '户名',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black45),
-                                ),
-                                Text(
-                                  '**付',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 12),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
-                      child: Text(
-                        '缴 费',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                Padding(
+                  padding: EdgeInsets.only(top: 12),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: RaisedButton(
+                          padding: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                          child: Text(
+                            '缴 费',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          onPressed: _openModalBottomSheet,
+                          splashColor: Colors.grey[200],
+                          color: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(60))),
+                        ),
                       ),
-                      onPressed: _openModalBottomSheet,
-                      splashColor: Colors.grey[200],
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(60))),
                     ),
-                  ),
-                ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       );
     }
   }
@@ -555,11 +562,7 @@ class _PayPageState extends State<PayPage> {
         title: Text('${_payInfo.type}账单'),
         elevation: 0.0,
       ),
-      body: ListView(
-        children: <Widget>[
-          _childLayout(_payInfo),
-        ],
-      ),
+      body: _childLayout(_payInfo),
     );
   }
 }
