@@ -290,10 +290,6 @@ class _MyPageState extends State<MyPage> {
                       color: Colors.white,
                       child: InkWell(
                         onTap: () {
-                          _prefs.then((SharedPreferences prefs) {
-                            prefs.setString('name', '');
-                            prefs.setString('pwd', '');
-                          });
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => LoginPage()));
                         },
