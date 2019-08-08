@@ -17,7 +17,7 @@ class _WaterPageState extends State<WaterPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '金华市';
+  String _selectCity = '丽水市';
   String _name = '';
   bool _autoValidate = false;
   String _userId = '';
@@ -109,8 +109,8 @@ class _WaterPageState extends State<WaterPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '金华市水费';
-    _payCostUnitController.text = '金华市净畅自来水有限公司';
+    _paymentProjectController.text = '丽水市水费';
+    _payCostUnitController.text = '丽水市供排水有限责任公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -218,13 +218,13 @@ class _WaterPageState extends State<WaterPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '金华市'
+                                                  ? '丽水市'
                                                   : value.name);
-                                              if (_selectCity == '金华市') {
+                                              if (_selectCity == '丽水市') {
                                                 _payCostUnitController.text =
-                                                    '金华市水费';
+                                                    '丽水市水费';
                                                 _paymentProjectController.text =
-                                                    '金华市净畅自来水有限公司';
+                                                    '丽水市供排水有限责任公司';
                                               } else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
                                                     '深圳市水费';

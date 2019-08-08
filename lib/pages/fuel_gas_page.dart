@@ -16,7 +16,7 @@ class _FuelGasPageState extends State<FuelGasPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '金华市';
+  String _selectCity = '丽水市';
   bool _autoValidate = false;
   String _userId;
   bool _isPay = false;
@@ -122,8 +122,8 @@ class _FuelGasPageState extends State<FuelGasPage> {
   @override
   void initState() {
     super.initState();
-    _paymentProjectController.text = '华威燃气';
-    _payCostUnitController.text = '金华市华威燃气有限公司';
+    _paymentProjectController.text = '巨鹏燃气';
+    _payCostUnitController.text = '丽水巨鹏燃气有限公司';
     _paymentProjectController.addListener(() {
       print(_paymentProjectController.value);
     });
@@ -231,13 +231,13 @@ class _FuelGasPageState extends State<FuelGasPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '金华市'
+                                                  ? '丽水市'
                                                   : value.name);
-                                              if (_selectCity == '金华市') {
+                                              if (_selectCity == '丽水市') {
                                                 _payCostUnitController.text =
-                                                '金华市华威燃气有限公司';
+                                                '丽水巨鹏燃气有限公司';
                                                 _paymentProjectController.text =
-                                                '华威燃气';
+                                                '巨鹏燃气';
                                               }else if (_selectCity == '深圳市') {
                                                 _payCostUnitController.text =
                                                     '深圳燃气集团股份有限公司';

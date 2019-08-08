@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
         _loading = !_loading;
         autoValidate = true;
       });
-      if(uName == 'HWUD2019004' && uPwd == 'hwjf004') {
+      if(uName == 'UD2019005' && uPwd == 'jprq005') {
         _save();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TabNavigator()));
       }else{
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    '华威燃气',
+                    '巨鹏燃气',
                     style: TextStyle(fontSize: 24, color: Colors.black54),
                   ),
                 ),

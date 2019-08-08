@@ -14,7 +14,7 @@ class _ElectricityPageState extends State<ElectricityPage> {
   final registerFormKey = GlobalKey<FormState>();
   TextEditingController _paymentProjectController = TextEditingController();
   TextEditingController _payCostUnitController = TextEditingController();
-  String _selectCity = '金华市';
+  String _selectCity = '丽水市';
   bool _autoValidate = false;
   String _userId;
   bool _visible = true;
@@ -207,9 +207,9 @@ class _ElectricityPageState extends State<ElectricityPage> {
                                               .then((value) {
                                             setState(() {
                                               _selectCity = (value == null
-                                                  ? '金华市'
+                                                  ? '丽水市'
                                                   : value.name);
-                                              if (_selectCity == '金华市') {
+                                              if (_selectCity == '丽水市') {
                                                 _visible = true;
                                                 _height = 410;
                                                 _payCostUnitController.text =
